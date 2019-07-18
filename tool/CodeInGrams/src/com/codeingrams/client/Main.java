@@ -7,15 +7,29 @@ package com.codeingrams.client;
 import java.io.IOException;
 import com.codeingrams.analyzer.AnalyzerImpl;
 import com.codeingrams.analyzer.IAnalyzer;
+import com.codeingrams.conf.ConfImpl;
+import com.codeingrams.conf.IConf;
 
 class Main {
 	public static void main(String[] args) {
-		String FILEPATH = "./input/codeBlock.txt";
+		
+		//Load configurations
+		IConf conf = new ConfImpl("./config.properties");
+		System.out.println(conf.loadConfig("host"));
+		
+		//load input file
+		String INPUTFILE = conf.loadConfig("INPUTFILE");
+		
+		//load output file
+		String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
+		
+		//load analyser
 		IAnalyzer analyzer = new AnalyzerImpl();
 		try {
-			analyzer.run(FILEPATH.toString());
+			analyzer.run(INPUTFILE.toString());
 		} catch (IOException e) {
 			System.out.println(e);;
 		}
+		
 	}
 }
