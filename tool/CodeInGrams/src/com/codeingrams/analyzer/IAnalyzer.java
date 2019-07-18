@@ -3,6 +3,10 @@
  */
 package com.codeingrams.analyzer;
 
-public class IAnalyzer {
+import java.io.IOException;
 
+public interface IAnalyzer {
+
+	public void run(String path) throws IOException;
+	
 }
