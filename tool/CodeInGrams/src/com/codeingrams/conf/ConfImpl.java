@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Properties;
 
 public class ConfImpl implements IConf {
@@ -22,8 +23,8 @@ public class ConfImpl implements IConf {
 	//load configuration from properties
 	@Override
 	public String loadConfig(String confName) {
+		configFile = new File(confPath);
 		try {
-			configFile = new File(confPath);
 		    FileReader reader = new FileReader(configFile);
 		    Properties props = new Properties();
 		    props.load(reader);
