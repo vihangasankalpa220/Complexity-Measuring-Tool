@@ -22,15 +22,13 @@ public class CreateProperties {
 		    props.setProperty("SYSTEM-LOG","./logs/system.error.log");
 		    props.setProperty("CONFIG-LOG","./logs/config.error.log");
 		    props.setProperty("ANALYZER-LOG","./logs/analyzer.error.log");
-<<<<<<< HEAD
-=======
 		    props.setProperty("DEBUG_MODE","true");
 		    props.setProperty("TOKENS_CTC","./tokens/tokens-Ctc.txt");
 		    props.setProperty("TOKENS_CS","./tokens/tokens-Cs.txt");
 		    props.setProperty("TOKENS_CNC","./tokens/tokens-Cnc.txt");
 		    props.setProperty("TOKENS_ALL","./tokens/tokens-all.txt");
 		    props.setProperty("TOKENS_CP","./tokens/tokens-Cp.txt");
->>>>>>> 30a60029a78d5d60944ebef0abfe613456f63619
+
 	        
 		    FileWriter writer = new FileWriter(configFile);
 		    props.store(writer, "SYSTEM SETTINGS - CodeInGrams");
