@@ -29,15 +29,12 @@ class Main {
 		//load output file
 		String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
 		
-<<<<<<< HEAD
-=======
 		//ANALYSER CONFIG SYSTEM loggers init
 		ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
 		ANALYSERLOGER.log("hello");
 		ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
 		ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
 		
->>>>>>> 30a60029a78d5d60944ebef0abfe613456f63619
 		//load analyzer
 		IAnalyzer analyzer = new AnalyzerImpl();
 		try {
