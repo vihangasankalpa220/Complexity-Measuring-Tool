@@ -1,82 +1,139 @@
-/*
- * Analyzer Implementation
- */
- 
-package com.codeingrams.analyzer;
-import java.io.*;
-import java.util.regex.*;
+#include <iostream>
+#include <fstream>
+#include <cstring>
+using namespace std;
 
-public class AnalyzerImpl implements IAnalyzer{
 
-    //variables
-    int vowelCount       = 0;
-    int consonantCount   = 0;
-    int punctuationCount = 0;
-    int whitespaceCount  = 0;
-    int digitCount       = 0;
-    int uppercaseCount   = 0;
-    int lowercaseCount   = 0;
-    int wordCount        = 0;
-    int charCount        = 0;
-    int lineCount        = 0;
-     
-    //count incidents
-    private int count(String line, Pattern pattern) {
-      int count = 0;
-      Matcher matcher = pattern.matcher(line);
-      while (matcher.find()) {
-          ++count;
-      }
-      return count;
-    }
+//hw scores and the class participation score, maximum 50.
+float compute_hw_participation(istream& infile)
+{
+float hw, part, hwp; float total=0;
+cout << " Scores are: ";
+for(int i=1; i <= 11; i++)
+{
+infile >> hw; 
+infile >> part;
+hwp = hw + part;
+cout << hwp << endl;
+}
+return total;
+}
 
-    //run and apply regex 
-    public void run(String path) throws IOException {
-     Pattern vowels      = Pattern.compile("[aeiouAEIOU]");
-     Pattern consonants  = Pattern.compile("[bcdfghjklmnpqrstuvwxyzBCDFGHJKLMNOPQRSTUVWXYZ]");
-     Pattern punctuation = Pattern.compile("\\p{Punct}");
-     Pattern whitespace  = Pattern.compile("\\p{Space}");
-     Pattern digits      = Pattern.compile("\\p{Digit}");
-     Pattern uppercase   = Pattern.compile("\\p{Upper}");
-     Pattern lowercase   = Pattern.compile("\\p{Lower}");
-     Pattern words       = Pattern.compile("\\w+");
-     Pattern characters  = Pattern.compile(".");
+//score on the tests, maximum 50.
+float compute_tests(float tests, istream& infile)
+{
 
-     if (path==null) {
-        System.out.println("Error - No filename provided");
-        System.exit(-1);
-     }
+infile >> tests;
+cout << " tests are " << tests << endl;
+return 0.0;
+} 
 
-     try {
-         BufferedReader br = new BufferedReader(new FileReader(path));
-         for (String line; (line = br.readLine()) != null; ) {
-            ++lineCount;
-            vowelCount       += count(line, vowels);
-            consonantCount   += count(line, consonants);
-            punctuationCount += count(line, punctuation);
-            whitespaceCount  += count(line, whitespace);
-            digitCount       += count(line, digits);
-            uppercaseCount   += count(line, uppercase);
-            lowercaseCount   += count(line, lowercase);
-            wordCount        += count(line, words);
-            charCount        += count(line, characters);
-        }
-     }catch (Exception e) {
-        System.out.println("Couldn't parse " + path + "\n" + e.getMessage());
-        System.exit(-1);
-    }
-    
-    System.out.println("Analysis of file" + path);
-    System.out.println("#Lines     "  + lineCount);
-    System.out.println("characters "  + charCount);
-    System.out.println("words     "  + wordCount);
-    System.out.println("uppercase   "  + uppercaseCount);
-    System.out.println("lowercase   "  + lowercaseCount);
-    System.out.println("consonants  "  + consonantCount);
-    System.out.println("vowels    "  + vowelCount);
-    System.out.println("digits     "  + digitCount);
-    System.out.println("punctuation "  + punctuationCount);
-    System.out.println("whitespace  "  + whitespaceCount);
-    
-	}
+
+
+float hwp, tests;
+//homework and participation + tests, maximum 100.
+float compute_totalscore(float totalscore) 
+{
+totalscore = hwp + tests; 
+cout << " Total score is " << totalscore << endl;
+return 0.0;
+}
+
+
+
+
+if (totalscore >= 90)
+{
+
+cout << "A" << endl; }
+else
+{
+
+if (totalscore >= 80)
+{
+
+cout << "B" << endl; }
+else
+{
+
+if (totalscore >= 70)
+{
+
+cout << "C" << endl; }
+else
+{
+
+if (totalscore >= 60)
+{
+
+cout << "D" << endl; }
+else
+{
+
+if (totalscore < 60)
+{
+
+cout << "F" << endl; }
+}
+}
+}
+}
+
+
+
+void printRecord (char name[20], char Id[8], float hwp, float tests, float totalscore, float grade, ostream& outfile)
+{
+outfile << "Name: "<< name << endl
+<< "Id: "<< Id << endl
+<< "Homework/Participation: " << hwp << endl
+<< "Tests: " << tests << endl
+<< "Total course score: " << totalscore << endl
+<< "Letter Grade: " << grade << endl 
+<<"-------------------------------------------------"<<endl<< endl;
+}
+
+int main()
+{
+ofstream outfile;
+ifstream infile; 
+
+
+char file_name[21], name[20], Id[20];
+
+float hwp, tests, totalscore;
+int deductions;
+
+cout << "Please enter name of input file: ";
+cin >> file_name;
+infile.open(file_name);
+if ( !infile)
+{
+// abandons operation with error mesg
+cout << "Could not open input file \n";
+return 0;
+}
+
+
+outfile.open("ScoreResult");
+if ( !outfile)
+{
+cout << "Could not open output file \n";
+return 0;
+}
+
+
+infile >> name; 
+while(!infile.eof())
+{
+infile >> Id;
+cout << name << " " << Id << endl;
+hwp = compute_hw_participation(infile);
+tests = compute_tests(tests, infile);
+totalscore = compute_totalscore(totalscore, infile);
+// grade
+printRecord(name, Id, hwp, tests, totalscore, outfile);
+infile >> name; 
+}
+
+return 0;
 }

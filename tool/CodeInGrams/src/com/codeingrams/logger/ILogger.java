@@ -3,6 +3,7 @@
  */
 package com.codeingrams.logger;
 
-public class ILogger {
-
+public interface ILogger {
+	void log(String string);
+	
 }

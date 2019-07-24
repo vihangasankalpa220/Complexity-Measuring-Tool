@@ -1,0 +1,19 @@
+#SYSTEM SETTINGS - CodeInGrams
+#Sun Jul 21 07:07:13 IST 2019
+TOKENS_CTC=./tokens/tokens-Ctc.txt
+CONFIG-LOG=./logs/config.error.log
+OUTPUTFILE-Cs=./input/result-Cs.txt
+OUTPUTFILE-Cr=./input/result-Cr.txt
+TOKENS_CNC=./tokens/tokens-Cnc.txt
+OUTPUTFILE-Cp=./input/result-Cp.txt
+OUTPUTFILE-Cn=./input/result-Cn.txt
+TOKENS_CS=./tokens/tokens-Cs.txt
+TOKENS_CP=./tokens/tokens-Cp.txt
+OUTPUTFILE-Ci=./input/result-Ci.txt
+OUTPUTFILE-Ctc=./input/result-Ctc.txt
+ANALYZER-LOG=./logs/analyzer.error.log
+SYSTEM-LOG=./logs/system.error.log
+host=localhost
+TOKENS_ALL=./tokens/tokens-all.txt
+DEBUG_MODE=false
+INPUTFILE=./input/codeBlock.txt

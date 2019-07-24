@@ -31,9 +31,9 @@ public class AnalyzerImpl implements IAnalyzer{
 
 	    //run regex resolution
 	    public void run(String path) throws IOException {
-
-	        Pattern vowels      = Pattern.compile("[aeiouAEIOU]");
-	        Pattern consonants  = Pattern.compile("[bcdfghjklmnpqrstuvwxyzBCDFGHJKLMNOPQRSTUVWXYZ]");
+/*
+	        Pattern FOR      = Pattern.compile("[aeiouAEIOU]");
+	        Pattern WHILE  = Pattern.compile("[bcdfghjklmnpqrstuvwxyzBCDFGHJKLMNOPQRSTUVWXYZ]");
 	        Pattern punctuation = Pattern.compile("\\p{Punct}");
 	        Pattern whitespace  = Pattern.compile("\\p{Space}");
 	        Pattern digits      = Pattern.compile("\\p{Digit}");
@@ -41,7 +41,18 @@ public class AnalyzerImpl implements IAnalyzer{
 	        Pattern lowercase   = Pattern.compile("\\p{Lower}");
 	        Pattern words       = Pattern.compile("\\w+");
 	        Pattern characters  = Pattern.compile(".");
-
+*/
+	        Pattern FOR      = Pattern.compile("for\\s*\\([^;]*?;[^;]*?;[^)]*?\\)");
+	        Pattern WHILE  = Pattern.compile("while\\s*\\([^)]*\\)");
+	        Pattern punctuation = Pattern.compile(".*&&.*");
+	        Pattern whitespace  = Pattern.compile(".*||.*");
+	        Pattern digits      = Pattern.compile(".*&.*");
+	        Pattern uppercase   = Pattern.compile(".*|.*");
+	        Pattern lowercase   = Pattern.compile(".*for.*");
+	        Pattern words       = Pattern.compile(".*for.*");
+	        Pattern characters  = Pattern.compile(".*for.*");
+	        
+	        
 	        //handle no  file
 	        if (path==null) {
 	            System.out.println("Error: No filename provided");
@@ -54,8 +65,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	            //update counters
 	            for (String line; (line = br.readLine()) != null; ) {
 	                ++lineCount;
-	                vowelCount       += count(line, vowels);
-	                consonantCount   += count(line, consonants);
+	                vowelCount       += count(line, FOR);
+	                consonantCount   += count(line, WHILE);
 	                punctuationCount += count(line, punctuation);
 	                whitespaceCount  += count(line, whitespace);
 	                digitCount       += count(line, digits);
@@ -81,8 +92,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	        System.out.println(" words:       "  + wordCount);
 	        System.out.println(" uppercase:   "  + uppercaseCount);
 	        System.out.println(" lowercase:   "  + lowercaseCount);
-	        System.out.println(" consonants:  "  + consonantCount);
-	        System.out.println(" vowels:      "  + vowelCount);
+	        System.out.println(" WHILE:  "  + consonantCount);
+	        System.out.println(" FOR:      "  + vowelCount);
 	        System.out.println(" digits:      "  + digitCount);
 	        System.out.println(" punctuation: "  + punctuationCount);
 	        System.out.println(" whitespace:  "  + whitespaceCount);
