@@ -20,13 +20,17 @@ import com.codeingrams.measurements.CncImpl;
 
 class Main {
 	public static void main(String[] args) {
+		//runtime counter init
 		long startTime = System.nanoTime();
+		
+		//welcome message
 		System.out.print("\r\n" + 
 				" __   __   __   ___         __   __              __  \r\n" + 
 				"/  ` /  \\ |  \\ |__  | |\\ | / _` |__)  /\\   |\\/| /__` \r\n" + 
 				"\\__, \\__/ |__/ |___ | | \\| \\__> |  \\ /~~\\  |  | .__/ \r\n" + 
 				"                                                    \r\n" + 
 				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
+		
 		//create properties file TODO: Uncomment after deployment
 		CreateProperties c = new CreateProperties();
 		c.setProperties();
@@ -58,7 +62,7 @@ class Main {
 		CncImpl cnc = new CncImpl();
 		System.out.println(" Nesting level depth: "+cnc.maxDepth(INPUTFILE.toString()));
 		
-		//end of the analyze
+		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
 		NumberFormat formatter = new DecimalFormat("#0.0");
 		System.out.println("================ Analyzed in "+ formatter.format((endTime - startTime) / 100000000d)+" seconds ===============");
