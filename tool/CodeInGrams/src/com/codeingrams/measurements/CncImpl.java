@@ -1,10 +1,39 @@
 package com.codeingrams.measurements;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 //Complexity - Nesting of Code
 public class CncImpl {
 
 	// maximum depth nested parenthesis  
-    public int maxDepth(String S) { 
+    public int maxDepth(String path) { 
+    	FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+    	byte[] buffer = new byte[10];
+    	StringBuilder sb = new StringBuilder();
+    	try {
+			while (fis.read(buffer) != -1) {
+				sb.append(new String(buffer));
+				buffer = new byte[10];
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	try {
+			fis.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+    	String S = sb.toString();
+    	
         int current_max = 0; // current count  
         int max = 0; // overall maximum count  
         int n = S.length(); 
