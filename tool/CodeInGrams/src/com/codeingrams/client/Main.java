@@ -65,6 +65,6 @@ class Main {
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
 		NumberFormat formatter = new DecimalFormat("#0.0");
-		System.out.println("================ Analyzed in "+ formatter.format((endTime - startTime) / 100000000d)+" seconds ===============");
+		System.out.println("================ Analyzed in "+ formatter.format((endTime - startTime) / 1000000000d)+" seconds ===============");
 	}
 }
