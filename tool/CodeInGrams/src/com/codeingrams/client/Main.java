@@ -16,6 +16,12 @@ import com.codeingrams.logger.LoggerImpl;
 class Main {
 	public static void main(String[] args) {
 		
+		System.out.print("\r\n" + 
+				" __   __   __   ___         __   __              __  \r\n" + 
+				"/  ` /  \\ |  \\ |__  | |\\ | / _` |__)  /\\   |\\/| /__` \r\n" + 
+				"\\__, \\__/ |__/ |___ | | \\| \\__> |  \\ /~~\\  |  | .__/ \r\n" + 
+				"                                                    \r\n" + 
+				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
 		//create properties file TODO: Uncomment after deployment
 		CreateProperties c = new CreateProperties();
 		c.setProperties();
