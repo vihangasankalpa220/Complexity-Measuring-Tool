@@ -1,1 +1,4 @@
 The program was compiled and run as follows:
+
+javac TextAnalyzer.java
+java TextAnalyzer file.txt

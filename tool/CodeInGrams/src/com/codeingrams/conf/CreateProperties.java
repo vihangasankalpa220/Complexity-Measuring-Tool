@@ -28,7 +28,6 @@ public class CreateProperties {
 		    props.setProperty("TOKENS_CNC","./tokens/tokens-Cnc.txt");
 		    props.setProperty("TOKENS_ALL","./tokens/tokens-all.txt");
 		    props.setProperty("TOKENS_CP","./tokens/tokens-Cp.txt");
-
 	        
 		    FileWriter writer = new FileWriter(configFile);
 		    props.store(writer, "SYSTEM SETTINGS - CodeInGrams");

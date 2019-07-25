@@ -7,6 +7,7 @@ import java.util.regex.*;
 
 public class AnalyzerImpl implements IAnalyzer{
 		
+	
 		///variables
 	  	int vowelCount       = 0;
 	  	int consonantCount   = 0;
@@ -18,7 +19,10 @@ public class AnalyzerImpl implements IAnalyzer{
 	    int wordCount        = 0;
 	    int charCount        = 0;
 	    int lineCount        = 0;
-      
+	  int manic=0;
+	  int artc=0;
+	  
+
 		//count occurrences 
 	    private int count(String line, Pattern pattern) {
 	        int count = 0;
@@ -28,6 +32,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	        }
 	        return count;
 	    }
+	    
+	  
 
 	    //run regex resolution
 	    public void run(String path) throws IOException {
@@ -42,6 +48,7 @@ public class AnalyzerImpl implements IAnalyzer{
 	        Pattern words       = Pattern.compile("\\w+");
 	        Pattern characters  = Pattern.compile(".");
 */
+	    	
 	        Pattern FOR      = Pattern.compile("for\\s*\\([^;]*?;[^;]*?;[^)]*?\\)");
 	        Pattern WHILE  = Pattern.compile("while\\s*\\([^)]*\\)");
 	        Pattern punctuation = Pattern.compile(".*&&.*");
@@ -51,13 +58,12 @@ public class AnalyzerImpl implements IAnalyzer{
 	        Pattern lowercase   = Pattern.compile(".*for.*");
 	        Pattern words       = Pattern.compile(".*for.*");
 	        Pattern characters  = Pattern.compile(".*for.*");
+	      
 	        
 	        
-	        //handle no  file
-	        if (path==null) {
-	            System.out.println("Error: No filename provided");
-	            System.exit(-1);
-	        }
+	   
+
+	     
 
 	        try {
 	        	//read file using buffer reader as the fastest method
@@ -74,6 +80,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	                lowercaseCount   += count(line, lowercase);
 	                wordCount        += count(line, words);
 	                charCount        += count(line, characters);
+	           
+	              
 	            }
 	            //release buffer reader
 	            if(br != null)
@@ -97,6 +105,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	        System.out.println(" digits:      "  + digitCount);
 	        System.out.println(" punctuation: "  + punctuationCount);
 	        System.out.println(" whitespace:  "  + whitespaceCount);
+	     
+	      
 	    }
 	
 }
