@@ -86,17 +86,17 @@ public class AnalyzerImpl implements IAnalyzer{
 	        }
 	        
 	        //output
-	        System.out.println(" Analysis of file: " + path);
-	        System.out.println(" #Lines:      "  + lineCount);
-	        System.out.println(" characters:  "  + charCount);
-	        System.out.println(" words:       "  + wordCount);
-	        System.out.println(" uppercase:   "  + uppercaseCount);
-	        System.out.println(" lowercase:   "  + lowercaseCount);
-	        System.out.println(" WHILE:  "  + consonantCount);
-	        System.out.println(" FOR:      "  + vowelCount);
-	        System.out.println(" digits:      "  + digitCount);
-	        System.out.println(" punctuation: "  + punctuationCount);
-	        System.out.println(" whitespace:  "  + whitespaceCount);
+	        System.out.println(" Analysis of file \t: " + path);
+	        System.out.println(" #Lines \t\t:"  + lineCount);
+	        System.out.println(" characters \t\t:"  + charCount);
+	        System.out.println(" words \t\t\t:"  + wordCount);
+	        System.out.println(" uppercase \t\t : "  + uppercaseCount);
+	        System.out.println(" lowercase\t :"  + lowercaseCount);
+	        System.out.println(" WHILE \t \t:"  + consonantCount);
+	        System.out.println(" FOR \t\t :"  + vowelCount);
+	        System.out.println(" digits \t\t:"  + digitCount);
+	        System.out.println(" punctuation \t: "  + punctuationCount);
+	        System.out.println(" whitespace \t\t: "  + whitespaceCount);
 	    }
 	
 }
