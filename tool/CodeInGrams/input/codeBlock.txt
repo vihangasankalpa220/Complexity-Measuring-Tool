@@ -24,7 +24,7 @@ float compute_tests(float tests, istream& infile)
 {
 
 infile >> tests;
-cout << " tests are " << tests << endl;
+cout << " tests are  " << tests << endl;
 return 0.0;
 } 
 
