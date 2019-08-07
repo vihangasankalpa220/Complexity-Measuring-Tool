@@ -107,6 +107,7 @@ public class AnalyzerImpl implements IAnalyzer{
 	        System.out.println(" whitespace:  "  + whitespaceCount);
 	     
 	      
+
 	    }
 	
 }
