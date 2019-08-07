@@ -57,9 +57,6 @@ class Main {
 			System.out.println(e);
 		}
 	
-		//Complexity by nesting
-		CncImpl cnc = new CncImpl();
-		System.out.println(" Nesting level depth: "+cnc.maxDepth(INPUTFILE.toString()));
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
