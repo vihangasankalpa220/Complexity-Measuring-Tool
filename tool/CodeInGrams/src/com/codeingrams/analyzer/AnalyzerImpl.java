@@ -17,14 +17,13 @@ public class AnalyzerImpl implements IAnalyzer{
 		///variables
 	  	int forCount       = 0;
 	  	int whileCount   = 0;
-	    int punctuationCount = 0;
-	    int whitespaceCount  = 0;
-	    int digitCount       = 0;
-	    int uppercaseCount   = 0;
-	    int lowercaseCount   = 0;
-	    int wordCount        = 0;
-	    int charCount        = 0;
 	    int lineCount        = 0;
+	    int elseCount   = 0;
+	    int elseifCount        = 0;
+	    int doCount        = 0;
+	    int switchCount   = 0;
+	    int ifCount        = 0;
+	    
 	    IConf conf;
 	    CreateProperties c;
 	    String INPUTFILE;
@@ -68,6 +67,11 @@ public class AnalyzerImpl implements IAnalyzer{
 
 	        Pattern FOR      = Pattern.compile("for\\s*\\([^;]*?;[^;]*?;[^)]*?\\)");
 	        Pattern WHILE  = Pattern.compile("while\\s*\\([^)]*\\)");
+	        Pattern DO  = Pattern.compile("do\\s*\\([^)]*\\)");
+	        Pattern IF  = Pattern.compile("if\\s*\\([^)]*\\)");
+	        Pattern SWITCH  = Pattern.compile("swich\\s*\\([^)]*\\)");
+	        Pattern ELSEIF  = Pattern.compile("else\\sif\\s*\\([^)]*\\)");
+	        Pattern ELSE  = Pattern.compile("else\\s*\\([^)]*\\)");
 	        
 	        //Complexity by nesting
 			CncImpl cnc = new CncImpl();
@@ -86,6 +90,11 @@ public class AnalyzerImpl implements IAnalyzer{
 	                ++lineCount;
 	                forCount       += count(line, FOR);
 	                whileCount   += count(line, WHILE);
+	                elseCount       += count(line, ELSE);
+	                elseifCount   += count(line, ELSEIF);
+	                switchCount       += count(line, SWITCH);
+	                ifCount   += count(line, IF);
+	                doCount   += count(line, DO);
 	            }
 	            //release buffer reader
 	            if(br != null)
@@ -102,6 +111,10 @@ public class AnalyzerImpl implements IAnalyzer{
 	        System.out.println(" LOC\t\t\t:"  + lineCount);
 	        System.out.println(" WHILE\t\t \t:"  + whileCount);
 	        System.out.println(" FOR\t\t\t:"  + forCount);
+	        System.out.println(" IF\t\t \t:"  + ifCount);
+	        System.out.println(" ELSE IF\t\t:"  + elseifCount);
+	        System.out.println(" SWITCH\t\t \t:"  + switchCount);
+	        System.out.println(" DO\t\t \t:"  + doCount);
 	        System.out.println(" Nesting level depth\t:"+cnc.maxDepth(INPUTFILE.toString()));
 	    }
 	
