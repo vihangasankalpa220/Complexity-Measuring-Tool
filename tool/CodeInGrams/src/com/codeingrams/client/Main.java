@@ -17,6 +17,9 @@ import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
 import com.codeingrams.measurements.CncImpl;
 
+import size.ISize;
+import size.SizeIMPL;
+
 class Main {
 	public static void main(String[] args) {
 		//runtime counter init
@@ -56,10 +59,28 @@ class Main {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+		
+	
 	
 		//Complexity by nesting
 		CncImpl cnc = new CncImpl();
 		System.out.println(" Nesting level depth: "+cnc.maxDepth(INPUTFILE.toString()));
+		
+		
+		System.out.println("-------------------------------------------------------------");
+		System.out.println("Complexity By Size Operators Count");
+		
+		//load analyzer
+				ISize size = new SizeIMPL();
+				try {
+					size.count(INPUTFILE.toString());
+				} catch (IOException e) {
+					System.out.println(e);
+				}
+		
+				System.out.println("-------------------------------------------------------------");
+				System.out.println("Complexity By Size Cp Value Counter");			
+				
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
