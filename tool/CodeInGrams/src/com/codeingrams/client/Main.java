@@ -14,8 +14,10 @@ import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
 import com.codeingrams.conf.CreateProperties;
 import com.codeingrams.conf.IConf;
+import com.codeingrams.inheritance.Iinheritance;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
+import com.codeingrams.measurements.CiImpl;
 import com.codeingrams.measurements.CncImpl;
 
 class Main {
@@ -61,6 +63,17 @@ class Main {
 		//Complexity by nesting
 		CncImpl cnc = new CncImpl();
 		System.out.println(" Nesting level depth: "+cnc.maxDepth(INPUTFILE.toString()));
+		
+		//Complexity due to inheritance
+		Iinheritance cInheritance = new CiImpl();
+		System.out.println("========================Complexity Due To Inheritance========================");
+		try {
+			cInheritance.count(INPUTFILE.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		System.out.println("=============================================================================");
+		
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
