@@ -13,9 +13,13 @@ import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
 import com.codeingrams.conf.CreateProperties;
 import com.codeingrams.conf.IConf;
+import com.codeingrams.inheritance.Iinheritance;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
+import com.codeingrams.measurements.CiImpl;
 import com.codeingrams.measurements.CncImpl;
+import com.codeingrams.measurements.CsImpl;
+import com.codeingrams.size.ISize;
 
 class Main {
 	public static void main(String[] args) {
@@ -57,6 +61,37 @@ class Main {
 			System.out.println(e);
 		}
 	
+		//Complexity due to inheritance
+				Iinheritance cInheritance = new CiImpl();
+				System.out.println("========================Complexity Due To Inheritance========================");
+				try {
+					cInheritance.count(INPUTFILE.toString());
+				} catch (IOException e) {
+					System.out.println(e);
+				}
+				System.out.println("=============================================================================");
+				
+				
+				System.out.println("-------------------------------------------------------------");
+				System.out.println("Complexity By Size Operators Count");
+				
+				//load analyzer
+						ISize size = new CsImpl();
+						try {
+							size.count(INPUTFILE.toString());
+						} catch (IOException e) {
+							System.out.println(e);
+						}
+				
+						System.out.println("-------------------------------------------------------------");
+						System.out.println("Complexity By Size Cs Value Counter");			
+						
+						
+						//Complexity by nesting
+						//CpImpl cp = new CpImpl();
+						//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
+				
+						
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
@@ -64,7 +99,7 @@ class Main {
 		System.out.println("================ Analyzed in "+ formatter.format((endTime - startTime) / 1000000000d)+" seconds ===============");
 	
 		//load UI
-		UI ui = new UI();
-		ui.loadUI();
+		//UI ui = new UI();
+		//ui.loadUI();
 	}
 }
