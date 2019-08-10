@@ -12,6 +12,7 @@ import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
 import com.codeingrams.conf.CreateProperties;
 import com.codeingrams.conf.IConf;
+import com.codeingrams.conf.MongoDbHelper;
 import com.codeingrams.inheritance.Iinheritance;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
@@ -91,6 +92,9 @@ class Main {
 						//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
 				
 						
+		//MongoDB connection
+		MongoDbHelper dbHelper= new MongoDbHelper();
+		dbHelper.connect();
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
