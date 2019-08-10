@@ -7,18 +7,18 @@ package com.codeingrams.client;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
 import com.codeingrams.analyzer.AnalyzerImpl;
 import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
 import com.codeingrams.conf.CreateProperties;
 import com.codeingrams.conf.IConf;
+import com.codeingrams.inheritance.Iinheritance;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
+import com.codeingrams.measurements.CiImpl;
 import com.codeingrams.measurements.CncImpl;
-
-import size.ISize;
-import size.SizeIMPL;
+import com.codeingrams.measurements.CsImpl;
+import com.codeingrams.size.ISize;
 
 class Main {
 	public static void main(String[] args) {
@@ -33,7 +33,7 @@ class Main {
 				"                                                    \r\n" + 
 				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
 		
-		//create properties file TODO: Uncomment after deployment
+		//create properties file 
 		CreateProperties c = new CreateProperties();
 		c.setProperties();
 		
@@ -44,13 +44,13 @@ class Main {
 		String INPUTFILE = conf.loadConfig("INPUTFILE");
 		
 		//load output file
-		String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
+		//String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
 		
 		//ANALYSER CONFIG SYSTEM loggers init
 		ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
 		ANALYSERLOGER.log("hello");
-		ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
-		ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
+		//ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
+		//ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
 		
 		//load analyzer
 		IAnalyzer analyzer = new AnalyzerImpl();
@@ -59,32 +59,46 @@ class Main {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		
 	
-	
-		//Complexity by nesting
-		CncImpl cnc = new CncImpl();
-		System.out.println(" Nesting level depth: "+cnc.maxDepth(INPUTFILE.toString()));
-		
-		
-		System.out.println("-------------------------------------------------------------");
-		System.out.println("Complexity By Size Operators Count");
-		
-		//load analyzer
-				ISize size = new SizeIMPL();
+		//Complexity due to inheritance
+				Iinheritance cInheritance = new CiImpl();
+				System.out.println("========================Complexity Due To Inheritance========================");
 				try {
-					size.count(INPUTFILE.toString());
+					cInheritance.count(INPUTFILE.toString());
 				} catch (IOException e) {
 					System.out.println(e);
 				}
-		
-				System.out.println("-------------------------------------------------------------");
-				System.out.println("Complexity By Size Cp Value Counter");			
+				System.out.println("=============================================================================");
 				
+				
+				System.out.println("=============================================================================");
+				System.out.println("Complexity By Size Operators Count");
+				System.out.println("=============================================================================");
+				//load analyzer
+						ISize size = new CsImpl();
+						try {
+							size.count(INPUTFILE.toString());
+						} catch (IOException e) {
+							System.out.println(e);
+						}
+				
+						System.out.println("====================================================");
+						System.out.println("Complexity By Size Cs Value Counter");			
+						
+						
+						//Complexity by nesting
+						//CpImpl cp = new CpImpl();
+						//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
+				
+						
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
 		NumberFormat formatter = new DecimalFormat("#0.0");
 		System.out.println("================ Analyzed in "+ formatter.format((endTime - startTime) / 1000000000d)+" seconds ===============");
+	
+		//load UI
+		//UI ui = new UI();
+		//ui.loadUI();
 	}
 }
