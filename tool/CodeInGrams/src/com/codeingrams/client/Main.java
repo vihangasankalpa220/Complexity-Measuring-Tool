@@ -47,7 +47,7 @@ class Main {
 		//String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
 		
 		//ANALYSER CONFIG SYSTEM loggers init
-		ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
+		//ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
 		//ANALYSERLOGER.log("hello");
 		//ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
 		//ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
