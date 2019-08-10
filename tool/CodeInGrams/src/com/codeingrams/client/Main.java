@@ -7,7 +7,6 @@ package com.codeingrams.client;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
 import com.codeingrams.analyzer.AnalyzerImpl;
 import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
@@ -34,7 +33,7 @@ class Main {
 				"                                                    \r\n" + 
 				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
 		
-		//create properties file TODO: Uncomment after deployment
+		//create properties file 
 		CreateProperties c = new CreateProperties();
 		c.setProperties();
 		
@@ -72,9 +71,9 @@ class Main {
 				System.out.println("=============================================================================");
 				
 				
-				System.out.println("-------------------------------------------------------------");
+				System.out.println("=============================================================================");
 				System.out.println("Complexity By Size Operators Count");
-				
+				System.out.println("=============================================================================");
 				//load analyzer
 						ISize size = new CsImpl();
 						try {
@@ -83,7 +82,7 @@ class Main {
 							System.out.println(e);
 						}
 				
-						System.out.println("-------------------------------------------------------------");
+						System.out.println("====================================================");
 						System.out.println("Complexity By Size Cs Value Counter");			
 						
 						
