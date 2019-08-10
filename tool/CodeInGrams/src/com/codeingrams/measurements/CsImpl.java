@@ -36,6 +36,9 @@ public class CsImpl implements ISize{
 	int mcount=0;
 	int whitespaceCount  = 0;
 	int lineCount        = 0;
+	int miscellenouse=0;
+	int commaCount = 0;	
+	int logicscount=0;
 
 	//count occurrences 
     	private int countOption2(String line, Pattern pattern) {
@@ -52,7 +55,7 @@ public class CsImpl implements ISize{
 				//regex pattern for white spaces
 				Pattern whitespace  = Pattern.compile("\\p{Space}");
 				Pattern words       = Pattern.compile("\\w+");
-				
+				Pattern logical     = Pattern.compile("(\\&&|\\!)");
 				try {
 		        	//read file using buffer reader as the fastest method
 		            BufferedReader br = new BufferedReader(new FileReader(path));
@@ -61,6 +64,7 @@ public class CsImpl implements ISize{
 		                ++lineCount;
 		                whitespaceCount  += countOption2(line, whitespace);
 		                countWord  += countOption2(line, words);
+		                logicscount +=countOption2(line,logical);
 		              
 		            }
 		            //release buffer reader
@@ -105,7 +109,7 @@ public class CsImpl implements ISize{
 						
 						sentenceCount += sentenceList.length; 
 						
-						if(line.contains("endl") || line.contains("etc.") || line.equals("\n"))
+						if(line.contains("endl") || line.equals("\n"))
 						{
 							manicount++;
 						}
@@ -143,10 +147,32 @@ public class CsImpl implements ISize{
 					    }
 					  
 					    ///class 
-						if(line.contains("public") && line.contains("class"))
+						if(line.contains("public") && line.contains("class") || line.contains("class") && line.contains("extends") || line.contains("class") && line.contains("implements"))
 						{
 							clcount++;
 						}
+						
+						
+						if(line.contains("class") && line.contains(":")){
+							
+							//For multiple inheritance..
+							//Getting the count of commas used to separate the multiple parent classes
+							
+							if(line.contains(",")) {
+								commaCount = line.length() - line.replace(",", "").length();
+								clcount = commaCount + 1;
+							}
+							
+							//For single inherited classes
+							
+							else {
+								clcount++;
+							
+							}
+							
+							clcount++;
+						}
+						
 					
 						//methods
 						if(line.contains("public") && line.contains("void") || line.contains("void")  || line.contains("public") && line.contains("int")   || line.contains("public") && line.contains("float")  || line.contains("public") && line.contains("double") || line.contains("public") && line.contains("String"))
@@ -155,14 +181,40 @@ public class CsImpl implements ISize{
 						}
 						
 						
-				            total=arithcount*1+rcount*1+bitcount*1+keycount*1+cons*2+countNumber*1+clcount*1+mcount*1;
+					if(line.contains("::")) {
+						miscellenouse++;
+					}
+					
+					else if(line.contains(":")) {
+						//////////////////
+						miscellenouse=	miscellenouse;
+					}
+						
+						///miscellenouse
+						
+						if(line.contains(",") || line.contains("->") || line.contains(".")) {
+							miscellenouse++;
+						}
+						
+						//logicaloperators
+						if(line.contains("||")) {
+							logicscount++;
+						}
+						
+					
+						
+						
+				            total=arithcount*1+rcount*1+bitcount*1+keycount*1+cons*2+countNumber*1+clcount*1+mcount*1+miscellenouse*1+logicscount*1;
 				          	      
 					
+				            
+				            
 				}
 		
 				
 				
 				System.out.println("Total word count = " + countWord); 
+				System.out.println("Total line count = " + lineCount); 
 				System.out.println("Total number of sentences = " + sentenceCount); 
 				System.out.println("Total number of characters = " + characterCount); 
 				System.out.println("Number of paragraphs = " + paragraphCount); 
@@ -176,7 +228,12 @@ public class CsImpl implements ISize{
 				System.out.println("Total number of Numerical Values = " + countNumber);
 				System.out.println("Total number of classes = " + clcount);
 				System.out.println("Total number of methods = " + mcount);
-				System.out.println("Total Complexity Value = " + total);
+				
+				System.out.println("Total number of miscellenouse = " + miscellenouse);
+				System.out.println("Total logical count = " + logicscount);
+				System.out.println("=============================================================================");
+				System.out.println("Total Complexity Value (Cs) = " + total);
+				System.out.println("=============================================================================");
 			}
 				catch(FileNotFoundException e) {
 					e.printStackTrace();
