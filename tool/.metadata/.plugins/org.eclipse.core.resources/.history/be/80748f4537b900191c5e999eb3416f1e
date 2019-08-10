@@ -1,0 +1,40 @@
+package com.codeingrams.client;
+import java.awt.*;
+import java.awt.event.*;
+
+public class UI  extends Frame implements KeyListener{
+
+	   private TextArea tfInput;  // Single-line TextField 
+	   private TextArea taDisplay; // Multi-line TextArea
+	 
+	   // Constructor to setup the GUI components and event handlers
+	   public UI() {
+	      setLayout(new FlowLayout()); 
+	 
+	      add(new Label("Copy Paste the code: "));
+	      tfInput = new TextArea(5, 40);
+	      add(tfInput);
+	      taDisplay = new TextArea(5, 40); 
+	      add(taDisplay);
+	 
+	      tfInput.addKeyListener(this);
+
+	      setTitle("KeyEvent Demo"); 
+	      setSize(400, 200);         
+	      setVisible(true);          
+	   }
+	 
+	   // The entry main() method
+	   public void loadUI() {
+	      new UI(); 
+	   }
+	 
+	   /** KeyEvent handlers */
+	   @Override
+	   public void keyTyped(KeyEvent evt) {
+	      taDisplay.append("You have typed " + evt.getKeyChar() + "\n");
+	   }
+	 
+	   @Override public void keyPressed(KeyEvent evt) { }
+	   @Override public void keyReleased(KeyEvent evt) { }
+}
