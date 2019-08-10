@@ -5,20 +5,53 @@ package com.codeingrams.analyzer;
 import java.io.*;
 import java.util.regex.*;
 
+import com.codeingrams.conf.ConfImpl;
+import com.codeingrams.conf.CreateProperties;
+import com.codeingrams.conf.IConf;
+import com.codeingrams.logger.ILogger;
+import com.codeingrams.logger.LoggerImpl;
+import com.codeingrams.measurements.CncImpl;
+
 public class AnalyzerImpl implements IAnalyzer{
 		
 		///variables
-	  	int vowelCount       = 0;
-	  	int consonantCount   = 0;
-	    int punctuationCount = 0;
-	    int whitespaceCount  = 0;
-	    int digitCount       = 0;
-	    int uppercaseCount   = 0;
-	    int lowercaseCount   = 0;
-	    int wordCount        = 0;
-	    int charCount        = 0;
+	  	int forCount       = 0;
+	  	int whileCount   = 0;
 	    int lineCount        = 0;
+	    int elseCount   = 0;
+	    int elseifCount        = 0;
+	    int doCount        = 0;
+	    int switchCount   = 0;
+	    int ifCount        = 0;
+	    
+	    IConf conf;
+	    CreateProperties c;
+	    String INPUTFILE;
+	    String OUTPUTFILE;
+	    ILogger ANALYSERLOGER;
+	    ILogger CONFIGLOGER;
+	    ILogger SYSTEMLOGER;
       
+	    public AnalyzerImpl(){
+			//create properties file TODO: Uncomment after deployment
+			c = new CreateProperties();
+			c.setProperties();
+			
+			//Load configurations
+			conf = new ConfImpl("./config.properties");
+			
+			//load input file
+			INPUTFILE = conf.loadConfig("INPUTFILE");
+			
+			//load output file
+			OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
+			
+			//ANALYSER CONFIG SYSTEM loggers init
+			ANALYSERLOGER = new LoggerImpl("ANALYZER");
+			CONFIGLOGER = new LoggerImpl("CONFIG");
+			SYSTEMLOGER = new LoggerImpl("SYSTEM");
+	    }
+	    
 		//count occurrences 
 	    private int count(String line, Pattern pattern) {
 	        int count = 0;
@@ -31,28 +64,18 @@ public class AnalyzerImpl implements IAnalyzer{
 
 	    //run regex resolution
 	    public void run(String path) throws IOException {
-/*
-	        Pattern FOR      = Pattern.compile("[aeiouAEIOU]");
-	        Pattern WHILE  = Pattern.compile("[bcdfghjklmnpqrstuvwxyzBCDFGHJKLMNOPQRSTUVWXYZ]");
-	        Pattern punctuation = Pattern.compile("\\p{Punct}");
-	        Pattern whitespace  = Pattern.compile("\\p{Space}");
-	        Pattern digits      = Pattern.compile("\\p{Digit}");
-	        Pattern uppercase   = Pattern.compile("\\p{Upper}");
-	        Pattern lowercase   = Pattern.compile("\\p{Lower}");
-	        Pattern words       = Pattern.compile("\\w+");
-	        Pattern characters  = Pattern.compile(".");
-*/
+
 	        Pattern FOR      = Pattern.compile("for\\s*\\([^;]*?;[^;]*?;[^)]*?\\)");
 	        Pattern WHILE  = Pattern.compile("while\\s*\\([^)]*\\)");
-	        Pattern punctuation = Pattern.compile(".*&&.*");
-	        Pattern whitespace  = Pattern.compile(".*||.*");
-	        Pattern digits      = Pattern.compile(".*&.*");
-	        Pattern uppercase   = Pattern.compile(".*|.*");
-	        Pattern lowercase   = Pattern.compile(".*for.*");
-	        Pattern words       = Pattern.compile(".*for.*");
-	        Pattern characters  = Pattern.compile(".*for.*");
+	        Pattern DO  = Pattern.compile("do\\s*\\([^)]*\\)");
+	        Pattern IF  = Pattern.compile("if\\s*\\([^)]*\\)");
+	        Pattern SWITCH  = Pattern.compile("swich\\s*\\([^)]*\\)");
+	        Pattern ELSEIF  = Pattern.compile("else\\sif\\s*\\([^)]*\\)");
+	        Pattern ELSE  = Pattern.compile("else\\s*\\([^)]*\\)");
 	        
-	        
+	        //Complexity by nesting
+			CncImpl cnc = new CncImpl();
+			
 	        //handle no  file
 	        if (path==null) {
 	            System.out.println("Error: No filename provided");
@@ -65,15 +88,13 @@ public class AnalyzerImpl implements IAnalyzer{
 	            //update counters
 	            for (String line; (line = br.readLine()) != null; ) {
 	                ++lineCount;
-	                vowelCount       += count(line, FOR);
-	                consonantCount   += count(line, WHILE);
-	                punctuationCount += count(line, punctuation);
-	                whitespaceCount  += count(line, whitespace);
-	                digitCount       += count(line, digits);
-	                uppercaseCount   += count(line, uppercase);
-	                lowercaseCount   += count(line, lowercase);
-	                wordCount        += count(line, words);
-	                charCount        += count(line, characters);
+	                forCount       += count(line, FOR);
+	                whileCount   += count(line, WHILE);
+	                elseCount       += count(line, ELSE);
+	                elseifCount   += count(line, ELSEIF);
+	                switchCount       += count(line, SWITCH);
+	                ifCount   += count(line, IF);
+	                doCount   += count(line, DO);
 	            }
 	            //release buffer reader
 	            if(br != null)
@@ -86,17 +107,15 @@ public class AnalyzerImpl implements IAnalyzer{
 	        }
 	        
 	        //output
-	        System.out.println(" Analysis of file: " + path);
-	        System.out.println(" #Lines:      "  + lineCount);
-	        System.out.println(" characters:  "  + charCount);
-	        System.out.println(" words:       "  + wordCount);
-	        System.out.println(" uppercase:   "  + uppercaseCount);
-	        System.out.println(" lowercase:   "  + lowercaseCount);
-	        System.out.println(" WHILE:  "  + consonantCount);
-	        System.out.println(" FOR:      "  + vowelCount);
-	        System.out.println(" digits:      "  + digitCount);
-	        System.out.println(" punctuation: "  + punctuationCount);
-	        System.out.println(" whitespace:  "  + whitespaceCount);
+	        System.out.println(" Analysis of file \t: " + path);
+	        System.out.println(" LOC\t\t\t:"  + lineCount);
+	        System.out.println(" WHILE\t\t \t:"  + whileCount);
+	        System.out.println(" FOR\t\t\t:"  + forCount);
+	        System.out.println(" IF\t\t \t:"  + ifCount);
+	        System.out.println(" ELSE IF\t\t:"  + elseifCount);
+	        System.out.println(" SWITCH\t\t \t:"  + switchCount);
+	        System.out.println(" DO\t\t \t:"  + doCount);
+	        System.out.println(" Nesting level depth\t:"+cnc.maxDepth(INPUTFILE.toString()));
 	    }
 	
 }
