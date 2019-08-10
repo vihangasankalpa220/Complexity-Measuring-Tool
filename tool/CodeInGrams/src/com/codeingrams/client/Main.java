@@ -48,7 +48,7 @@ class Main {
 		
 		//ANALYSER CONFIG SYSTEM loggers init
 		ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
-		ANALYSERLOGER.log("hello");
+		//ANALYSERLOGER.log("hello");
 		//ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
 		//ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
 		
