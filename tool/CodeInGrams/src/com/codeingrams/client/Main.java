@@ -32,7 +32,7 @@ class Main {
 				"/  ` /  \\ |  \\ |__  | |\\ | / _` |__)  /\\   |\\/| /__` \r\n" + 
 				"\\__, \\__/ |__/ |___ | | \\| \\__> |  \\ /~~\\  |  | .__/ \r\n" + 
 				"                                                    \r\n" + 
-				"===============| CODE COMPLEXITY :D |=============== \n \n");
+				"=======| STATIC CODE COMPLEXITY ANALYZER :D |======== \n \n");
 		
 		//create properties file 
 		CreateProperties c = new CreateProperties();
