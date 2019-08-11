@@ -1,46 +1,41 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.codeingrams.recursion;
 
+// Java program to check if parenthesis are 
+// balanced or not in an expression. 
 import java.util.Stack;
 
 public class BalancedParanthesis {
 
-    public boolean isBalanced(String expression) {
-        char[] c = expression.toCharArray();
+    public static boolean balancedParenthensies(String s) {
+//        System.out.println("Passed String length is: " + s.length());
+
         Stack<Character> stack = new Stack<Character>();
-        for (int i = 0; i < c.length; i++) {
-            if (c[i] == '{' || c[i] == '[' || c[i] == '(') {
-                stack.push(c[i]);
-            }
-            if (c[i] == '}' || c[i] == ']' || c[i] == ')') {
-                if (stack.isEmpty()) {
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '[' || c == '(' || c == '{') {
+                stack.push(c);
+            } else if (c == ']') {
+                if (stack.isEmpty() || stack.pop() != '[') {
                     return false;
                 }
-                if (!stack.isEmpty()) {
-                    if (!matchElements(stack.pop(), c[i]))
+            } else if (c == ')') {
+                if (stack.isEmpty() || stack.pop() != '(') {
+                    return false;
+                }
+            } else if (c == '}') {
+                if (stack.isEmpty() || stack.pop() != '{') {
                     return false;
                 }
             }
+
         }
-        if (!stack.isEmpty())
-            return false;
-        else
-            return true;
-    }
+        return stack.isEmpty();
 
-    private boolean matchElements(Character pop, char c) {
-        if (pop == '{' && c == '}')
-            return true;
-        else if (pop == '[' && c == ']')
-            return true;
-        else if (pop == '(' && c == ')')
-            return true;
-        return false;
     }
-    
-
-	public static boolean balancedParenthensies(String textFile) {
-		BalancedParanthesis balancedParanthesis=new BalancedParanthesis();
-		return balancedParanthesis.isBalanced("{[harsh]}");
-	}
-    
 }
