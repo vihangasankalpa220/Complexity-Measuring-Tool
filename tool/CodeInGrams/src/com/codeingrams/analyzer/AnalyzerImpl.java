@@ -116,6 +116,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	        System.out.println(" SWITCH\t\t \t:"  + switchCount);
 	        System.out.println(" DO\t\t \t:"  + doCount);
 	        System.out.println(" Nesting level depth\t:"+cnc.maxDepth(INPUTFILE.toString()));
+	        //Complexity due to Nesting Level And Type Of Controll Structure (filePath, complexity due to size, complexity due to inheritance)
+	        System.out.println(" Complexity due to Nesting Level And Type Of Controll Structure\t:"+cnc.getCPSduetoNestingLevelAndTypeOfControllStructure(INPUTFILE.toString() , 2.0, 1.0));
 	    }
 	
 }

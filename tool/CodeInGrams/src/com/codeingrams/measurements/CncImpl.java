@@ -64,15 +64,20 @@ public class CncImpl {
     } 
     
     //calculate total weight
-    public double getTW(double ctc, double cnc , double ci) {
+    private double getTW(String path, double cnc , double ci) {
     	//returns total weight
-		return ctc+cnc+ci;
+		return getWeightDuetoControlStructure(path)+cnc+ci;
 	}
     
     //calculate complexity of a program statement due to nesting level and the type of control structure
-    public double getCPS(double cs, double tw) {
-		return cs*tw;
-    	
+    public double getCPSduetoNestingLevelAndTypeOfControllStructure(String path , double cs, double ci) {
+		return cs*getTW(path, maxDepth(path) , ci);
+    }
+    
+    //get weights from tokens
+    private double getWeightDuetoControlStructure(String path) {
+    	CtcImpl ctcimp = new CtcImpl();
+    	return ctcimp.checkCtcScore(path);
     }
     
     
