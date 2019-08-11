@@ -63,5 +63,17 @@ public class CncImpl {
         return max; 
     } 
     
+    //calculate total weight
+    public double getTW(double ctc, double cnc , double ci) {
+    	//returns total weight
+		return ctc+cnc+ci;
+	}
+    
+    //calculate complexity of a program statement due to nesting level and the type of control structure
+    public double getCPS(double cs, double tw) {
+		return cs*tw;
+    	
+    }
+    
     
 }
