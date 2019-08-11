@@ -141,7 +141,7 @@ return 0;
 new Int;
 throws IOException(){
 }
-public Class:myClass, class2, class3 {
+public Class: public myClass, public class2, public class3 {
 }
 
 public class subsystem extends system{
