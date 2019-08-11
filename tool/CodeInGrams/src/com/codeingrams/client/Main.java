@@ -19,6 +19,7 @@ import com.codeingrams.logger.LoggerImpl;
 import com.codeingrams.measurements.CiImpl;
 import com.codeingrams.measurements.CncImpl;
 import com.codeingrams.measurements.CsImpl;
+import com.codeingrams.recursion.Complexity;
 import com.codeingrams.size.ISize;
 
 class Main {
@@ -91,6 +92,12 @@ class Main {
 		//CpImpl cp = new CpImpl();
 		//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
 
+		//Complexity by Recursion
+		Complexity complexity = new Complexity();
+		boolean value = complexity.checkRecursion(INPUTFILE);
+		System.out.println("====================================================");
+		System.out.println(value ? "Code contains recursive methods" : "Code does not contain recursive methods");	
+		
 		
 		//MongoDB connection
 		MongoDbHelper dbHelper= new MongoDbHelper();
