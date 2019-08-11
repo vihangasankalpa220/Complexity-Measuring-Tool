@@ -106,18 +106,25 @@ public class AnalyzerImpl implements IAnalyzer{
 	            System.exit(-1);
 	        }
 	        
-	        //output
-	        System.out.println(" Analysis of file \t: " + path);
-	        System.out.println(" LOC\t\t\t:"  + lineCount);
-	        System.out.println(" WHILE\t\t \t:"  + whileCount);
-	        System.out.println(" FOR\t\t\t:"  + forCount);
-	        System.out.println(" IF\t\t \t:"  + ifCount);
-	        System.out.println(" ELSE IF\t\t:"  + elseifCount);
-	        System.out.println(" SWITCH\t\t \t:"  + switchCount);
-	        System.out.println(" DO\t\t \t:"  + doCount);
+	        System.out.println("========================Complexity due to Nesting Level ========================");
 	        System.out.println(" Nesting level depth\t:"+cnc.maxDepth(INPUTFILE.toString()));
-	        //Complexity due to Nesting Level And Type Of Controll Structure (filePath, complexity due to size, complexity due to inheritance)
-	        System.out.println(" Complexity due to Nesting Level And Type Of Controll Structure\t:"+cnc.getCPSduetoNestingLevelAndTypeOfControllStructure(INPUTFILE.toString() , 2.0, 1.0));
+	        
+	        //output
+	        if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true")) {
+	        	System.out.println(" Analysis of file \t: " + path);
+		        System.out.println(" LOC\t\t\t:"  + lineCount);
+		        System.out.println(" WHILE\t\t \t:"  + whileCount);
+		        System.out.println(" FOR\t\t\t:"  + forCount);
+		        System.out.println(" IF\t\t \t:"  + ifCount);
+		        System.out.println(" ELSE IF\t\t:"  + elseifCount);
+		        System.out.println(" SWITCH\t\t \t:"  + switchCount);
+		        System.out.println(" DO\t\t \t:"  + doCount);
+		     }
+	        
+	        System.out.println("\n========================Complexity due to the Type Of Controll Structure ========================");
+	        
+	        //Complexity due to Nesting Level And Type Of Control Structure (filePath, complexity due to size, complexity due to inheritance)
+	        System.out.println(" Total Complexity due to Nesting level and Control Structure\t:"+cnc.getCPSduetoNestingLevelAndTypeOfControllStructure(INPUTFILE.toString() , 2.0, 1.0));
 	    }
 	
 }

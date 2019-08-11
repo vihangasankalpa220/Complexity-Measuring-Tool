@@ -32,7 +32,7 @@ class Main {
 				"/  ` /  \\ |  \\ |__  | |\\ | / _` |__)  /\\   |\\/| /__` \r\n" + 
 				"\\__, \\__/ |__/ |___ | | \\| \\__> |  \\ /~~\\  |  | .__/ \r\n" + 
 				"                                                    \r\n" + 
-				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
+				"===============| CODE COMPLEXITY :D |=============== \n \n");
 		
 		//create properties file 
 		CreateProperties c = new CreateProperties();
@@ -62,36 +62,36 @@ class Main {
 		}
 	
 		//Complexity due to inheritance
-				Iinheritance cInheritance = new CiImpl();
-				System.out.println("========================Complexity Due To Inheritance========================");
-				try {
-					cInheritance.count(INPUTFILE.toString());
-				} catch (IOException e) {
-					System.out.println(e);
-				}
-				System.out.println("=============================================================================");
+		Iinheritance cInheritance = new CiImpl();
+		System.out.println("\n========================Complexity Due To Inheritance========================");
+		try {
+			cInheritance.count(INPUTFILE.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		System.out.println("=============================================================================");
+		
+		
+		System.out.println("=============================================================================");
+		System.out.println("Complexity By Size Operators Count");
+		System.out.println("=============================================================================");
+		//load analyzer
+		ISize size = new CsImpl();
+		try {
+			size.count(INPUTFILE.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 				
-				
-				System.out.println("=============================================================================");
-				System.out.println("Complexity By Size Operators Count");
-				System.out.println("=============================================================================");
-				//load analyzer
-						ISize size = new CsImpl();
-						try {
-							size.count(INPUTFILE.toString());
-						} catch (IOException e) {
-							System.out.println(e);
-						}
-				
-						System.out.println("====================================================");
-						System.out.println("Complexity By Size Cs Value Counter");			
+		System.out.println("====================================================");
+		System.out.println("Complexity By Size Cs Value Counter");			
+		
 						
-						
-						//Complexity by nesting
-						//CpImpl cp = new CpImpl();
-						//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
-				
-						
+		//Complexity by nesting
+		//CpImpl cp = new CpImpl();
+		//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
+
+		
 		//MongoDB connection
 		MongoDbHelper dbHelper= new MongoDbHelper();
 		dbHelper.connect();

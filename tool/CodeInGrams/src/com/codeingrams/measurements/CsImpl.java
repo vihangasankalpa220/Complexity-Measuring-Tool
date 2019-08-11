@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.codeingrams.conf.ConfImpl;
+import com.codeingrams.conf.IConf;
 import com.codeingrams.size.ISize;
 
 //Complexity - Size
@@ -52,6 +54,10 @@ public class CsImpl implements ISize{
     
 			@Override
 			public void count(String path) throws IOException {
+				
+				//Load configurations
+				IConf conf = new ConfImpl("./config.properties");
+				
 				//regex pattern for white spaces
 				Pattern whitespace  = Pattern.compile("\\p{Space}");
 				Pattern words       = Pattern.compile("\\w+");
@@ -212,25 +218,26 @@ public class CsImpl implements ISize{
 				}
 		
 				
+				if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true")) {
+					System.out.println("Total word count = " + countWord); 
+					System.out.println("Total line count = " + lineCount); 
+					System.out.println("Total number of sentences = " + sentenceCount); 
+					System.out.println("Total number of characters = " + characterCount); 
+					System.out.println("Number of paragraphs = " + paragraphCount); 
+					System.out.println("Total number of whitespaces = " + whitespaceCount); 
+					System.out.println("Total number of arithmetical operators = " + arithcount);
+					System.out.println("Total number of manipulators = " + manicount);
+					System.out.println("Total number of relational operators = " + rcount);
+					System.out.println("Total number of Keywords = " + keycount);
+					System.out.println("Total number of Bitwise Operators = " + bitcount);
+					System.out.println("Total number of Constants = " + cons);
+					System.out.println("Total number of Numerical Values = " + countNumber);
+					System.out.println("Total number of classes = " + clcount);
+					System.out.println("Total number of methods = " + mcount);
+					System.out.println("Total number of miscellenouse = " + miscellenouse);
+					System.out.println("Total logical count = " + logicscount);
+				}
 				
-				System.out.println("Total word count = " + countWord); 
-				System.out.println("Total line count = " + lineCount); 
-				System.out.println("Total number of sentences = " + sentenceCount); 
-				System.out.println("Total number of characters = " + characterCount); 
-				System.out.println("Number of paragraphs = " + paragraphCount); 
-				System.out.println("Total number of whitespaces = " + whitespaceCount); 
-				System.out.println("Total number of arithmetical operators = " + arithcount);
-				System.out.println("Total number of manipulators = " + manicount);
-				System.out.println("Total number of relational operators = " + rcount);
-				System.out.println("Total number of Keywords = " + keycount);
-				System.out.println("Total number of Bitwise Operators = " + bitcount);
-				System.out.println("Total number of Constants = " + cons);
-				System.out.println("Total number of Numerical Values = " + countNumber);
-				System.out.println("Total number of classes = " + clcount);
-				System.out.println("Total number of methods = " + mcount);
-				
-				System.out.println("Total number of miscellenouse = " + miscellenouse);
-				System.out.println("Total logical count = " + logicscount);
 				System.out.println("=============================================================================");
 				System.out.println("Total Complexity Value (Cs) = " + total);
 				System.out.println("=============================================================================");
