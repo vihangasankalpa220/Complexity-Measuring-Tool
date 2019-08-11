@@ -18,60 +18,71 @@ import com.codeingrams.conf.IConf;
 
 public class CtcImpl {
 
-	private int count = 0;
-    private int score = 0;
     HashMap<String,Integer> tokens;
-    private double weight=0;
-    private int lineCount =0;
+    double weight;
     Pattern TOKEN;
-    int weightedValue =0;
+    int weightedValue;
     
 	//Load configurations
 	IConf conf = new ConfImpl("./config.properties");
 	//load input file
 	String TOCKENFILE = conf.loadConfig("TOKENS_CTC");
+	String CODEBLOCK = conf.loadConfig("INPUTFILE");
 			
 	public double checkCtcScore( String path){
 		tokens = new HashMap<String,Integer>();
 		String line = "";
-		
+		this.weight = 0;
+		this.weightedValue=0;
+		//handle no  file
+        if (path==null) {
+            System.out.println("Error: No filename provided");
+            System.exit(-1);
+        }
+        
 		//get tokens
-	    try(BufferedReader br = new BufferedReader(new FileReader("./tokens/tockens-Ctc"))) {
+	    try(BufferedReader br = new BufferedReader(new FileReader(TOCKENFILE))) {
 	        
+	    	//gather tokens into the hashMap
 	        while ((line = br.readLine()) != null) {
 	        	tokens.put(line.split(",")[0],Integer.parseInt(line.split(",")[1]));
-	        	count++;
 	        }
+	        
+	        //release buffer reader
+	        if(br != null)
+	        	br.close();
 	        
 	    } catch (Exception e) {
 	    	System.out.println("Couldn't parse "+ e.getMessage());
 		}
 	    
+	  
+        
 		try {
         	//read file using buffer reader as the fastest method
-            BufferedReader br2 = new BufferedReader(new FileReader(path));
-            /* Display token valus using Iterator*/
+            BufferedReader br2 = new BufferedReader(new FileReader(CODEBLOCK));
+            Pattern TOKEN1      = Pattern.compile("for\\s*\\([^;]*?;[^;]*?;[^)]*?\\)");
+            /* Display token values using Iterator*/
   	      	Set set = tokens.entrySet();
   	      	Iterator iterator = set.iterator();
-  	      
-            while(iterator.hasNext()) {
-	   	         Map.Entry mentry = (Map.Entry)iterator.next();
-	   	         TOKEN      = Pattern.compile((String) mentry.getKey());
-	   	         weightedValue = Integer.parseInt(mentry.getValue().toString());
-	   	         //debug mode
+  	      	
+            //update counters
+            for (String line2; (line2 = br2.readLine()) != null; ) {
+            	
+            	while(iterator.hasNext()) {
+   	   	         Map.Entry mentry = (Map.Entry)iterator.next();
+   	   	         Pattern TOKEN      = Pattern.compile(String.valueOf(mentry.getKey()));
+   	   	         weightedValue = (int) mentry.getValue();
+   	   	         weight   += countTokens(line2, TOKEN)*weightedValue;
+   	   	         
+   	   	         //debug mode
 	   	         if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true"))
-	   	        	 System.out.println("Check : "+mentry.getKey()+" Weight: "+ mentry.getValue());
-	   	         
-	   	         //update counters
-	             for (String line2; (line2 = br2.readLine()) != null; ) {
-	                 weight   = countTokens(line2, TOKEN);
-	                 weight += weight;
-	                 //if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true"))
-	                	 //System.out.print(weight);
-	             }
-   	      	}
+	   	        	 System.out.println(" Check : "+TOKEN+" Weight: "+ weightedValue);
+      	      	}
+            }
             
-            System.out.print(weight);
+            if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true"))
+           	 System.out.println("\n Complexity due to Type Of Controll Structure: "+weight);
             
             //release buffer reader
             if(br2 != null)
@@ -83,7 +94,7 @@ public class CtcImpl {
             System.exit(-1);
         }
 	    
-	    return weight;
+	    return this.weight;
 	}
 	
 	//count occurrences 

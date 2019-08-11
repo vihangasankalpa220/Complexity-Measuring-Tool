@@ -18,6 +18,19 @@ cout << hwp << endl;
 }
 return total;
 }
+while(!true){
+}
+
+
+for(int i=1; i <= 11; i++)
+{
+infile >> hw; 
+infile >> part;
+hwp = hw + part;
+cout << hwp << endl;
+}
+return total;
+}
 
 //score on the tests, maximum 50.
 float compute_tests(float tests, istream& infile)
