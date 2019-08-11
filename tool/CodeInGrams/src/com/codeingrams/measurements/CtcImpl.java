@@ -56,17 +56,22 @@ public class CtcImpl {
   	      
             while(iterator.hasNext()) {
 	   	         Map.Entry mentry = (Map.Entry)iterator.next();
-	   	         Pattern TOKEN      = Pattern.compile((String) mentry.getKey());
-	   	         int weightedValue = (int) mentry.getValue();
+	   	         TOKEN      = Pattern.compile((String) mentry.getKey());
+	   	         weightedValue = Integer.parseInt(mentry.getValue().toString());
+	   	         //debug mode
 	   	         if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true"))
 	   	        	 System.out.println("Check : "+mentry.getKey()+" Weight: "+ mentry.getValue());
+	   	         
 	   	         //update counters
 	             for (String line2; (line2 = br2.readLine()) != null; ) {
-	                 weight   += countTokens(line2, TOKEN)*weightedValue;
-	                 if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true"))
-	                	 System.out.print(weight);
+	                 weight   = countTokens(line2, TOKEN);
+	                 weight += weight;
+	                 //if(conf.loadConfig("DEBUG_MODE").equalsIgnoreCase("true"))
+	                	 //System.out.print(weight);
 	             }
    	      	}
+            
+            System.out.print(weight);
             
             //release buffer reader
             if(br2 != null)
