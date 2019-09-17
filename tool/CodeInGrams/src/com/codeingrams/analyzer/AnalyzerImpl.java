@@ -11,6 +11,7 @@ import com.codeingrams.conf.IConf;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
 import com.codeingrams.measurements.CncImpl;
+import com.codeingrams.measurements.Database;
 
 public class AnalyzerImpl implements IAnalyzer{
 		
@@ -23,6 +24,18 @@ public class AnalyzerImpl implements IAnalyzer{
 	    int doCount        = 0;
 	    int switchCount   = 0;
 	    int ifCount        = 0;
+	  	int vowelCount       = 0;
+	  	int consonantCount   = 0;
+	    int punctuationCount = 0;
+	    int whitespaceCount  = 0;
+	    int digitCount       = 0;
+	    int uppercaseCount   = 0;
+	    int lowercaseCount   = 0;
+	    int wordCount        = 0;
+	    int charCount        = 0;
+	 
+	  int manic=0;
+	  int artc=0;
 	    
 	    IConf conf;
 	    CreateProperties c;
@@ -72,6 +85,13 @@ public class AnalyzerImpl implements IAnalyzer{
 	        Pattern SWITCH  = Pattern.compile("swich\\s*\\([^)]*\\)");
 	        Pattern ELSEIF  = Pattern.compile("else\\sif\\s*\\([^)]*\\)");
 	        Pattern ELSE  = Pattern.compile("else\\s*\\([^)]*\\)");
+	        Pattern punctuation = Pattern.compile(".*&&.*");
+	        Pattern whitespace  = Pattern.compile(".*||.*");
+	        Pattern digits      = Pattern.compile(".*&.*");
+	        Pattern uppercase   = Pattern.compile(".*|.*");
+	        Pattern lowercase   = Pattern.compile(".*for.*");
+	        Pattern words       = Pattern.compile(".*for.*");
+	        Pattern characters  = Pattern.compile(".*for.*");
 	        
 	        //Complexity by nesting
 			CncImpl cnc = new CncImpl();
@@ -95,6 +115,13 @@ public class AnalyzerImpl implements IAnalyzer{
 	                switchCount       += count(line, SWITCH);
 	                ifCount   += count(line, IF);
 	                doCount   += count(line, DO);
+	                punctuationCount += count(line, punctuation);
+	                whitespaceCount  += count(line, whitespace);
+	                digitCount       += count(line, digits);
+	                uppercaseCount   += count(line, uppercase);
+	                lowercaseCount   += count(line, lowercase);
+	                wordCount        += count(line, words);
+	                charCount        += count(line, characters);
 	            }
 	            //release buffer reader
 	            if(br != null)
@@ -119,6 +146,28 @@ public class AnalyzerImpl implements IAnalyzer{
 		        System.out.println(" ELSE IF\t\t:"  + elseifCount);
 		        System.out.println(" SWITCH\t\t \t:"  + switchCount);
 		        System.out.println(" DO\t\t \t:"  + doCount);
+		   
+		        System.out.println(" characters:  "  + charCount);
+		        System.out.println(" words:       "  + wordCount);
+		        System.out.println(" uppercase:   "  + uppercaseCount);
+		        System.out.println(" lowercase:   "  + lowercaseCount);
+		        System.out.println(" WHILE:  "  + consonantCount);
+		        System.out.println(" FOR:      "  + vowelCount);
+		        System.out.println(" digits:      "  + digitCount);
+		        System.out.println(" punctuation: "  + punctuationCount);
+		        System.out.println(" whitespace:  "  + whitespaceCount);
+	
+		        
+		        
+		        try {
+		              Database.setData("insert into codewhite(whitespace,punctuation,words) values('" + whitespaceCount + "','" + lineCount + "','" + wordCount +  "') ");
+		              
+		               //}
+		            }catch(Exception e) {
+		            	//e.printStackTrace();
+		            }
+		        
+		        
 		     }
 	        
 	        System.out.println("\n========================Complexity due to the Type Of Controll Structure ========================");
