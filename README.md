@@ -1,5 +1,13 @@
 # Complexity-Measuring-Tool
 
+
+Run Using Netbeans develop the uploader part and mistakes of this 
+
+
+
+
+
+
 The primary objective of this tool is to build quality software that could be easily maintained by reducing the maintenance cost of the software developed by a company. The complexity will me measured according to the following factors:
 
 a. Size
