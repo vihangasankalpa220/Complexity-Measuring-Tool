@@ -103,6 +103,17 @@ class Main {
 		MongoDbHelper dbHelper= new MongoDbHelper();
 		dbHelper.connect();
 		
+		//Complexity due to inheritance
+		Iinheritance cInheritance = new CiImpl();
+		System.out.println("========================Complexity Due To Inheritance========================");
+		try {
+			cInheritance.count(INPUTFILE.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		System.out.println("=============================================================================");
+		
+		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
 		NumberFormat formatter = new DecimalFormat("#0.0");
