@@ -1,6 +1,5 @@
 package com.codeingrams.measurements;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -63,6 +62,23 @@ public class CncImpl {
   
         return max; 
     } 
+    
+    //calculate total weight
+    private double getTW(String path, double cnc , double ci) {
+    	//returns total weight
+		return getWeightDuetoControlStructure(path)+cnc+ci;
+	}
+    
+    //calculate complexity of a program statement due to nesting level and the type of control structure
+    public double getCPSduetoNestingLevelAndTypeOfControllStructure(String path , double cs, double ci) {
+		return cs*getTW(path, maxDepth(path) , ci);
+    }
+    
+    //get weights from tokens
+    private double getWeightDuetoControlStructure(String path) {
+    	CtcImpl ctcimp = new CtcImpl();
+    	return ctcimp.checkCtcScore(path);
+    }
     
     
 }

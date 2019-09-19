@@ -8,6 +8,7 @@ import java.util.Properties;
 public class CreateProperties {
 	private IConf conf ;
 	public void setProperties(){
+
 		 //check properties file
 		 File temp;
 		 //load properties

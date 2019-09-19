@@ -7,18 +7,20 @@ package com.codeingrams.client;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.concurrent.TimeUnit;
-
 import com.codeingrams.analyzer.AnalyzerImpl;
 import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
 import com.codeingrams.conf.CreateProperties;
 import com.codeingrams.conf.IConf;
+import com.codeingrams.conf.MongoDbHelper;
 import com.codeingrams.inheritance.Iinheritance;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
 import com.codeingrams.measurements.CiImpl;
 import com.codeingrams.measurements.CncImpl;
+import com.codeingrams.measurements.CsImpl;
+import com.codeingrams.recursion.Complexity;
+import com.codeingrams.size.ISize;
 
 class Main {
 	public static void main(String[] args) {
@@ -31,9 +33,9 @@ class Main {
 				"/  ` /  \\ |  \\ |__  | |\\ | / _` |__)  /\\   |\\/| /__` \r\n" + 
 				"\\__, \\__/ |__/ |___ | | \\| \\__> |  \\ /~~\\  |  | .__/ \r\n" + 
 				"                                                    \r\n" + 
-				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
+				"=======| STATIC CODE COMPLEXITY ANALYZER :D |======== \n \n");
 		
-		//create properties file TODO: Uncomment after deployment
+		//create properties file 
 		CreateProperties c = new CreateProperties();
 		c.setProperties();
 		
@@ -44,13 +46,13 @@ class Main {
 		String INPUTFILE = conf.loadConfig("INPUTFILE");
 		
 		//load output file
-		String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
+		//String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
 		
 		//ANALYSER CONFIG SYSTEM loggers init
-		ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
-		ANALYSERLOGER.log("hello");
-		ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
-		ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
+		//ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
+		//ANALYSERLOGER.log("hello");
+		//ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
+		//ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
 		
 		//load analyzer
 		IAnalyzer analyzer = new AnalyzerImpl();
@@ -60,9 +62,46 @@ class Main {
 			System.out.println(e);
 		}
 	
+		//Complexity due to inheritance
+		Iinheritance cInheritance = new CiImpl();
+		System.out.println("\n========================Complexity Due To Inheritance========================");
+		try {
+			cInheritance.count(INPUTFILE.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		System.out.println("=============================================================================");
+		
+		
+		System.out.println("=============================================================================");
+		System.out.println("Complexity By Size Operators Count");
+		System.out.println("=============================================================================");
+		//load analyzer
+		ISize size = new CsImpl();
+		try {
+			size.count(INPUTFILE.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+				
+		System.out.println("====================================================");
+		System.out.println("Complexity By Size Cs Value Counter");			
+		
+						
 		//Complexity by nesting
-		CncImpl cnc = new CncImpl();
-		System.out.println(" Nesting level depth: "+cnc.maxDepth(INPUTFILE.toString()));
+		//CpImpl cp = new CpImpl();
+		//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
+
+		//Complexity by Recursion
+		Complexity complexity = new Complexity();
+		boolean value = complexity.checkRecursion(INPUTFILE);
+		System.out.println("====================================================");
+		System.out.println(value ? "Code contains recursive methods" : "Code does not contain recursive methods");	
+		
+		
+		//MongoDB connection
+		MongoDbHelper dbHelper= new MongoDbHelper();
+		dbHelper.connect();
 		
 		//Complexity due to inheritance
 		Iinheritance cInheritance = new CiImpl();
@@ -79,5 +118,9 @@ class Main {
 		long endTime   = System.nanoTime();
 		NumberFormat formatter = new DecimalFormat("#0.0");
 		System.out.println("================ Analyzed in "+ formatter.format((endTime - startTime) / 1000000000d)+" seconds ===============");
+	
+		//load UI
+		//UI ui = new UI();
+		//ui.loadUI();
 	}
 }
