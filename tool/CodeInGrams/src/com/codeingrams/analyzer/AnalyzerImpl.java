@@ -15,17 +15,17 @@ import com.codeingrams.measurements.Database;
 
 public class AnalyzerImpl implements IAnalyzer{
 		
-		///variables
-	  	int forCount       = 0;
-	  	int whileCount   = 0;
+            ///variables
+            int forCount       = 0;
+            int whileCount   = 0;
 	    int lineCount        = 0;
 	    int elseCount   = 0;
 	    int elseifCount        = 0;
 	    int doCount        = 0;
 	    int switchCount   = 0;
 	    int ifCount        = 0;
-	  	int vowelCount       = 0;
-	  	int consonantCount   = 0;
+            int vowelCount       = 0;
+            int consonantCount   = 0;
 	    int punctuationCount = 0;
 	    int whitespaceCount  = 0;
 	    int digitCount       = 0;
@@ -34,8 +34,8 @@ public class AnalyzerImpl implements IAnalyzer{
 	    int wordCount        = 0;
 	    int charCount        = 0;
 	 
-	  int manic=0;
-	  int artc=0;
+            int manic=0;
+            int artc=0;
 	    
 	    IConf conf;
 	    CreateProperties c;
@@ -46,23 +46,23 @@ public class AnalyzerImpl implements IAnalyzer{
 	    ILogger SYSTEMLOGER;
       
 	    public AnalyzerImpl(){
-			//create properties file TODO: Uncomment after deployment
-			c = new CreateProperties();
-			c.setProperties();
-			
-			//Load configurations
-			conf = new ConfImpl("./config.properties");
-			
-			//load input file
-			INPUTFILE = conf.loadConfig("INPUTFILE");
-			
-			//load output file
-			OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
-			
-			//ANALYSER CONFIG SYSTEM loggers init
-			ANALYSERLOGER = new LoggerImpl("ANALYZER");
-			CONFIGLOGER = new LoggerImpl("CONFIG");
-			SYSTEMLOGER = new LoggerImpl("SYSTEM");
+                //create properties file TODO: Uncomment after deployment
+                c = new CreateProperties();
+                c.setProperties();
+
+                //Load configurations
+                conf = new ConfImpl("./config.properties");
+
+                //load input file
+                INPUTFILE = conf.loadConfig("INPUTFILE");
+
+                //load output file
+                OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
+
+                //ANALYSER CONFIG SYSTEM loggers init
+                ANALYSERLOGER = new LoggerImpl("ANALYZER");
+                CONFIGLOGER = new LoggerImpl("CONFIG");
+                SYSTEMLOGER = new LoggerImpl("SYSTEM");
 	    }
 	    
 		//count occurrences 
@@ -94,7 +94,7 @@ public class AnalyzerImpl implements IAnalyzer{
 	        Pattern characters  = Pattern.compile(".*for.*");
 	        
 	        //Complexity by nesting
-			CncImpl cnc = new CncImpl();
+		CncImpl cnc = new CncImpl();
 			
 	        //handle no  file
 	        if (path==null) {
@@ -156,18 +156,14 @@ public class AnalyzerImpl implements IAnalyzer{
 		        System.out.println(" digits:      "  + digitCount);
 		        System.out.println(" punctuation: "  + punctuationCount);
 		        System.out.println(" whitespace:  "  + whitespaceCount);
-	
-		        
-		        
+   
 		        try {
 		              Database.setData("insert into codewhite(whitespace,punctuation,words) values('" + whitespaceCount + "','" + lineCount + "','" + wordCount +  "') ");
 		              
 		               //}
 		            }catch(Exception e) {
 		            	//e.printStackTrace();
-		            }
-		        
-		        
+		            } 
 		     }
 	        
 	        System.out.println("\n========================Complexity due to the Type Of Controll Structure ========================");
