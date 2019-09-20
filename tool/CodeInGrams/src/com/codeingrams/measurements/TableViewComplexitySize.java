@@ -6,6 +6,8 @@
 package com.codeingrams.measurements;
 
 
+
+import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
 import java.awt.image.VolatileImage;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,9 +19,15 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.LookAndFeel;
 import javax.swing.table.DefaultTableModel;
-
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.text.*;
+import javax.swing.JTable;
 
 /**
  *
@@ -55,7 +63,6 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton9 = new javax.swing.JButton();
         jLabel48 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -73,7 +80,6 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
@@ -81,20 +87,10 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton9.setBackground(new java.awt.Color(0, 102, 153));
-        jButton9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 51, 51));
-        jButton9.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\printer_add.png")); // NOI18N
-        jButton9.setText("Print Report");
-        jButton9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(102, 255, 51), null, null));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
 
         jLabel48.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel48.setForeground(new java.awt.Color(255, 0, 0));
@@ -173,7 +169,7 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Digital-7 Mono", 0, 70)); // NOI18N
         jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 170, 80));
 
-        jPanel7.setBackground(new java.awt.Color(51, 255, 255));
+        jPanel7.setBackground(new java.awt.Color(102, 51, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel7.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 63, -1));
 
@@ -194,18 +190,6 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton10MouseClicked(evt);
-            }
-        });
-
-        jButton11.setBackground(new java.awt.Color(204, 0, 102));
-        jButton11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(51, 153, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\invoice.png")); // NOI18N
-        jButton11.setText("Search all");
-        jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(102, 255, 51), null, null));
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
             }
         });
 
@@ -240,6 +224,28 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\addressbook.png")); // NOI18N
         jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 60, 70));
 
+        jButton1.setBackground(new java.awt.Color(51, 0, 255));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(102, 0, 153));
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\invoice.png")); // NOI18N
+        jButton1.setText("Search All");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(153, 0, 153));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 51, 51));
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\printer_add.png")); // NOI18N
+        jButton2.setText("Print Report");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -259,30 +265,31 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(73, 73, 73))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(111, 111, 111))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(19, Short.MAX_VALUE))))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -290,7 +297,7 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -334,8 +341,8 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
       }
     }//GEN-LAST:event_jButton10MouseClicked
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-      DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+   DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
 
         try {
@@ -343,22 +350,45 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
             while (rs.next()) {
 
                 Vector v = new Vector();
-                   v.add(rs.getString(1));
+                      v.add(rs.getString(1));
                 v.add(rs.getString(2));
-                
-                v.add (rs.getString(3));
-                
-               //year
+                v.add(rs.getString(3));
              
-              
+          
                 dtm.addRow(v);
 
             }
+            
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    //    Map par=new HashMap();
+      //  par.put(null, null);
+      MessageFormat header=new MessageFormat("Report For Complexity due to size");
+        MessageFormat footer=new MessageFormat("Page{0,number,integer}");
+        try{
+          /*  String url="jdbc:mysql://localhost:3306/CodeInGrams";
+            String username="root";
+            String password="";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=(Connection)DriverManager.getConnection(url, username,password);
+            String reppath="C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\reports\\report1.jrxml";
+            JasperPrint print=JasperFillManager.fillReport(reppath, par,con);
+            JasperViewer.viewReport(print, false);*/
+          
+          jTable1.print(JTable.PrintMode.FIT_WIDTH,header,footer);
+          
+
+        }
+        catch(java.awt.print.PrinterException e)
+        {
+           System.err.format("Cannot Print Report Page %s \n", e.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
     
       private void whitespacecount() {
 	        
@@ -444,7 +474,7 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
          try {
 
             
-              //     UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
+             UIManager.setLookAndFeel(SyntheticaBlackStarLookAndFeel());
             
 
         } catch (Exception e) {
@@ -463,9 +493,9 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel19;
@@ -490,5 +520,14 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+
+    private LookAndFeel SyntheticaBlackStarLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(SyntheticaBlackStarLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(TableViewComplexitySize.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return SyntheticaBlackStarLookAndFeel();
+    }
 
 }

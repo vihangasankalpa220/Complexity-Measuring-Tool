@@ -55,7 +55,7 @@ public class CsImpl implements ISize  {
     String[] syskey = {"System.out.println"};
     String[] invalidStringVariables = {"public", "static", "else", "try", "return", "private", "class"};
     String[] constValueTwoVariables = {"&", "throw", "throws", "new", "delete"};
-    String numRegex   = "[0-9]";
+    String numRegex   = ".*[0-9].*";
     int commaCount = 0;
     String doubleqoute="\"([^\"]*)\"";
    String white= "\\p{Space}";
@@ -98,6 +98,11 @@ public class CsImpl implements ISize  {
                 while (stringToken.hasMoreTokens()) {
                     words = stringToken.nextToken();
                     
+                    if(words.startsWith("/*") || words.startsWith("*")){
+                        break;
+                    }
+                    
+                    
                     if(line.startsWith("System") && line.contains("+")) {
                    	 arr.add(words);
                      complexity++;
@@ -120,7 +125,7 @@ public class CsImpl implements ISize  {
                     
                     //comments
                   if(line.contains("//")) {
-                    	break;
+                    //	break;
                     }
                     
                     //white space
@@ -145,7 +150,7 @@ public class CsImpl implements ISize  {
                     
                    //Numerical value 
                  
-                    if (line.matches(numRegex)) {
+                    if (words.matches(numRegex)) {
                     	 arr.add(words);
                     	  complexity++;
 				    }
@@ -153,7 +158,7 @@ public class CsImpl implements ISize  {
                     
                     
                     //Double Qoutations
-                    if (line.matches(doubleqoute)) {
+                    if (words.matches(doubleqoute)) {
                     	 arr.add(words);
                          complexity++;
 				    }
@@ -310,7 +315,7 @@ public class CsImpl implements ISize  {
                     
                     if (!arr.contains(words)) {
                         if (words.equals("//")) {
-                         //   break;
+                           break;
                         } else {
                         // System.out.println(words);
                             complexity = complexity + 1;
@@ -347,7 +352,7 @@ public class CsImpl implements ISize  {
                System.out.println("===================================================================================================================================================================");
             try {
               Database.setData("insert into codesize(lineNo,Line,Complexity) values('" + line_count + "','" + line + "','" + complexity +  "') ");
-              Database.setData("insert into codecom(total) values('" + totalcomplexity + "') ");
+              
                //}
             }catch(Exception e) {
             	//e.printStackTrace();
@@ -367,7 +372,7 @@ public class CsImpl implements ISize  {
 
         System.out.println("Total Size Complexity is: " + totalcomplexity);
      
-       JOptionPane.showMessageDialog(null, "Successfully Added CodeInGrams Code For the Database");
+        JOptionPane.showMessageDialog(null, "Successfully Added CodeInGrams Code For the Database");
     }
 
 }
