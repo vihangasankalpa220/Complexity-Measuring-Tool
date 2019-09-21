@@ -277,7 +277,7 @@ public class Complexity {
     }
 
     private void checkMethodOverloding(String methodNameOnly, String method, String methodStructure, String foundDataTypes[], int parameterCount, ArrayList<String> list) throws ParseException {
-        
+
 //        System.out.println("Original: \n" + methodStructure + "\n\n");
 //        System.out.println(methodStructure.replaceAll("\\s(?=[(,])", ""));
         //get the pattern from constants
@@ -317,7 +317,6 @@ public class Complexity {
 
                     //additional chracters will be removed before the function name like -> return powerOf10 n-1)*+-/powerOf10("hey");
                     String trimmedWord = word.replaceAll("[/*+-]", "");
-                    
 
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
                     int cc = 0;
@@ -332,16 +331,16 @@ public class Complexity {
                             String split[] = trimmed.split(",");
 
                             for (String wor : split) {
-                                
+
                                 //check both original and recursive methods' parameters counts are equal
                                 //then we can neglect all other methods with lesser #.of paramters arguments
                                 if (split.length == parameterCount) {
                                     cc++;
-                                    if(cc == 1){
+                                    if (cc == 1) {
                                         System.out.println("- " + trimmedWord);
                                         cc = 10;
                                     }
-                                    
+
                                     checkDataType(wor, list);
                                 } else {
                                     //System.out.println("no split");
@@ -419,11 +418,18 @@ public class Complexity {
                 System.out.println("object type");
             }
         }
-        
-        
+
+        System.out.println("ok");
+
         //printing arg types in original method
-//        for(String arg:list){
-//            System.out.println("Arg: " + arg);
-//        }
+        for (String arg : list) {
+            System.out.println("Arg: " + arg);
+        }
+        
+        System.out.println("---");
+        
+        for(String argg : al){
+            System.out.println("Argg: " + argg);
+        }
     }
 }
