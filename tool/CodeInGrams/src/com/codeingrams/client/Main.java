@@ -61,28 +61,14 @@ class Main {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-	
-		//Complexity due to inheritance
-		Iinheritance cInheritance = new CiImpl();
-		System.out.println("\n========================Complexity Due To Inheritance========================");
-		try {
-			cInheritance.count(INPUTFILE.toString());
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-		System.out.println("=============================================================================");
-		
+
 		
 		System.out.println("=============================================================================");
 		System.out.println("Complexity By Size Operators Count");
 		System.out.println("=============================================================================");
 		//load analyzer
 		ISize size = new CsImpl();
-		try {
-			size.count(INPUTFILE.toString());
-		} catch (IOException e) {
-			System.out.println(e);
-		}
+                size.count(INPUTFILE.toString());
 				
 		System.out.println("====================================================");
 		System.out.println("Complexity By Size Cs Value Counter");			

@@ -118,8 +118,6 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Digital-7 Mono", 0, 80)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(51, 51, 51));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\recycle-full.png")); // NOI18N
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -157,8 +155,6 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(153, 255, 153));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel20.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\globe.png")); // NOI18N
         jPanel6.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 63, 60));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 19)); // NOI18N
@@ -180,13 +176,10 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
 
         jLabel24.setFont(new java.awt.Font("Digital-7 Mono", 0, 70)); // NOI18N
         jPanel7.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 160, 80));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\arrow-retweet.png")); // NOI18N
         jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 60, 70));
 
         jButton10.setBackground(new java.awt.Color(51, 0, 153));
         jButton10.setForeground(new java.awt.Color(255, 255, 0));
-        jButton10.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\Calculator.png")); // NOI18N
         jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton10MouseClicked(evt);
@@ -198,13 +191,13 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Line No", "Line Content", "CS "
+                "Line No", "Line Content", "CS ", "Cnc", "Ctc"
             }
         ));
         jScrollPane3.setViewportView(jTable1);
@@ -220,14 +213,11 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
 
         jLabel27.setFont(new java.awt.Font("Digital-7 Mono", 0, 70)); // NOI18N
         jPanel8.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 160, 80));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\addressbook.png")); // NOI18N
         jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 60, 70));
 
         jButton1.setBackground(new java.awt.Color(51, 0, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(102, 0, 153));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\invoice.png")); // NOI18N
         jButton1.setText("Search All");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,7 +228,6 @@ public class TableViewComplexitySize extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(153, 0, 153));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 51, 51));
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\VIHANGA\\Documents\\GitHub\\Complexity-Measuring-Tool\\tool\\CodeInGrams\\src\\icons\\printer_add.png")); // NOI18N
         jButton2.setText("Print Report");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
