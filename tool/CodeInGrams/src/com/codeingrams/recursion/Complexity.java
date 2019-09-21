@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
  */
 public class Complexity {
 
+    int getCount, getCount2 = 0;
+
     private static String readFile(String path) {
         StringBuilder sb = new StringBuilder();
 
@@ -294,7 +296,8 @@ public class Complexity {
 
         // if an occurrence if a pattern was found in a given string...
         while (m.find()) {
-
+            getCount = 0;
+            getCount2 = 0;
             //rename m.group(0) for easy use to word
             String word = m.group(0).trim();
 
@@ -319,7 +322,7 @@ public class Complexity {
                     String trimmedWord = word.replaceAll("[/*+-]", "");
 
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
-                    int cc = 0, ccount = 0;
+                    int cc = 0, ccount = 0, count2 = 0;
                     while (mm.find()) {
 
                         //get the parameter
@@ -344,6 +347,7 @@ public class Complexity {
 
                                     if (ccount <= numberOfSplit) {
 //                                        System.out.println("CCount : " + ccount);
+
                                         checkDataType(wor, list);
                                     }
 
@@ -376,6 +380,7 @@ public class Complexity {
 
     //this will check what kind of parameters are within the recursive method/s
     private void checkDataType(String param, ArrayList<String> list) {
+
         //regex to check if the param is a number o(of any kind) or a character-type data type
         String regex = "(.)*(\\d)(.)*";
 
@@ -421,29 +426,47 @@ public class Complexity {
                 al.add("boolean");
             } else { //an object type
                 System.out.println("object type");
+                al.add("Object");
             }
         }
 
-        String arrayOne[] = new String[list.size()];
-        arrayOne = list.toArray(arrayOne);
-        
-        String arrayTwo[] = new String[list.size()];
+        String arrayTwo[] = arrayTwo = new String[al.size()];
         arrayTwo = al.toArray(arrayTwo);
         
-        if(arrayOne[0].equals(arrayTwo[0])){
-//            System.out.println("done");
+        String arrayOne[] = new String[list.size()];
+
+//        if (getCount <= 0) {
+            
+            
+            arrayOne = list.toArray(arrayOne);
+
+            //printing arg types in original method
+            list.stream().forEach((arg) -> {
+//                System.out.println("Arg1: " + arg);
+            });
+            getCount++;
+
+            for (String one : arrayOne) {
+//                System.out.println("ORIGINAL: " + one);
+            }
+//        }
+
+        
+
+        for (String one : arrayTwo) {
+//            System.out.println("FAKE: " + one);
         }
         
-        //printing arg types in original method
-        list.stream().forEach((arg) -> {
-            System.out.println("Arg: " + arg);
-        });
+        int c = getCount2;
+//        System.out.println(arrayTwo[0]);
+        if(arrayOne[c].equals(arrayTwo[0])){
+            System.out.println("Found");
+        }else{
+            System.out.println("Not found!");
+        }
+        getCount2++;
 
-        //printing args in netsetd methods which satisfies the number of args = number of args in master method
-        al.stream().forEach((argg) -> {
-            System.out.println("Argg: " + argg);
-        });
         
-        
+
     }
 }
