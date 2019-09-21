@@ -21,9 +21,10 @@ import com.codeingrams.measurements.CncImpl;
 import com.codeingrams.measurements.CsImpl;
 import com.codeingrams.recursion.Complexity;
 import com.codeingrams.size.ISize;
+import java.text.ParseException;
 
 class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		//runtime counter init
 		long startTime = System.nanoTime();
 		
