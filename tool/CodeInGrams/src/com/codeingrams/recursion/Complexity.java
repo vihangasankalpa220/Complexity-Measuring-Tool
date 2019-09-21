@@ -232,7 +232,7 @@ public class Complexity {
                                     //get all the methods with the same method name to check if they satisfy the
                                     //same name different parameter lists concept (method overloading)
                                     //so we can check is it the same method's been recursing within.
-                                    checkMethodOverloding(methodNameOnly, method, methodStructure, copyDataArr, count);
+                                    checkMethodOverloding(methodNameOnly, method, methodStructure, copyDataArr, count, list);
 
                                     String findStr = methodNameOnly;
                                     int lastIndex = 0;
@@ -276,8 +276,8 @@ public class Complexity {
         }
     }
 
-    private void checkMethodOverloding(String methodNameOnly, String method, String methodStructure, String foundDataTypes[], int parameterCount) throws ParseException {
-
+    private void checkMethodOverloding(String methodNameOnly, String method, String methodStructure, String foundDataTypes[], int parameterCount, ArrayList<String> list) throws ParseException {
+        
 //        System.out.println("Original: \n" + methodStructure + "\n\n");
 //        System.out.println(methodStructure.replaceAll("\\s(?=[(,])", ""));
         //get the pattern from constants
@@ -317,10 +317,10 @@ public class Complexity {
 
                     //additional chracters will be removed before the function name like -> return powerOf10 n-1)*+-/powerOf10("hey");
                     String trimmedWord = word.replaceAll("[/*+-]", "");
-                    System.out.println("- " + trimmedWord);
+                    
 
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
-
+                    int cc = 0;
                     while (mm.find()) {
 
                         //get the parameter
@@ -332,14 +332,19 @@ public class Complexity {
                             String split[] = trimmed.split(",");
 
                             for (String wor : split) {
-
+                                
                                 //check both original and recursive methods' parameters counts are equal
                                 //then we can neglect all other methods with lesser #.of paramters arguments
                                 if (split.length == parameterCount) {
-                                   
-                                    checkDataType(wor);
+                                    cc++;
+                                    if(cc == 1){
+                                        System.out.println("- " + trimmedWord);
+                                        cc = 10;
+                                    }
+                                    
+                                    checkDataType(wor, list);
                                 } else {
-                                    System.out.println("no split");
+                                    //System.out.println("no split");
                                 }
 
                             }
@@ -352,9 +357,10 @@ public class Complexity {
                             //check what kind of parameters are within the recursive method/s
                             //and by if condition, let's check if the parameter counts are equal
                             if (parameterCount == 1) {
-                                checkDataType(param);
+                                System.out.println("- " + trimmedWord);
+                                checkDataType(param, list);
                             } else {
-                                System.out.println("no");
+                                //System.out.println("no");
                             }
 
                         }
@@ -365,7 +371,7 @@ public class Complexity {
     }
 
     //this will check what kind of parameters are within the recursive method/s
-    private void checkDataType(String param) {
+    private void checkDataType(String param, ArrayList<String> list) {
         //regex to check if the param is a number o(of any kind) or a character-type data type
         String regex = "(.)*(\\d)(.)*";
 
@@ -380,19 +386,19 @@ public class Complexity {
 
             if (dataType.contains(".")) { //a double or a float
                 if (dataType.contains("f") || dataType.contains("F")) { //a float
-                    System.out.println("float");
+//                    System.out.println("float");
                     al.add("float;");
                 } else if (dataType.contains("D") || dataType.contains("d")) { //a double
-                    System.out.println("double");
+//                    System.out.println("double");
                     al.add("double;");
                 } else { //also a double
-                    System.out.println("double");
+//                    System.out.println("double");
                     al.add("double;");
                 }
             } else { //an int or a long
 
                 if ((Integer.parseInt(dataType) >= -2147483648) && (Integer.parseInt(dataType) <= 2147483647)) { //an int
-                    System.out.println("int");
+//                    System.out.println("int");
                     al.add("int");
                 } else if ((dataType.contains("l") || dataType.contains("L")) || (Long.parseLong(dataType) >= -9223372036854775808f && (Long.parseLong(dataType) <= 9223372036854775807f))) {
                     al.add("long");
@@ -401,17 +407,23 @@ public class Complexity {
 
         } else { //can be char or String or a boolean or an object type
             if (dataType.contains("\'")) { //char
-                System.out.println("char");
+//                System.out.println("char");
                 al.add("char");
             } else if (dataType.contains("\"")) { //String
-                System.out.println("String");
+//                System.out.println("String");
                 al.add("String");
             } else if (dataType.equals("true") || dataType.equals("false")) { //boolean
-                System.out.println("boolean");
+//                System.out.println("boolean");
                 al.add("boolean");
             } else { //an object type
                 System.out.println("object type");
             }
         }
+        
+        
+        //printing arg types in original method
+//        for(String arg:list){
+//            System.out.println("Arg: " + arg);
+//        }
     }
 }
