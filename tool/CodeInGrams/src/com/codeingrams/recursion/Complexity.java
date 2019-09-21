@@ -334,8 +334,8 @@ public class Complexity {
                             //check what kind of parameters are within the recursive method/s
                             
                         } else {
-//                            System.out.println("One param");
-//                            System.out.println("Data type is: " + param.getClass().getSimpleName());
+//                            System.out.println("One param");      
+                            System.out.println("Simple name is: " + param.getClass().getSimpleName());
                             
                             //check what kind of parameters are within the recursive method/s
                             checkDataType(param);
@@ -354,7 +354,12 @@ public class Complexity {
         Pattern pattern = Pattern.compile(regex);
         String dataType = param;
         boolean containsNumber = pattern.matcher(dataType).matches();
-
+        
+        //creating an ArrayList to store the data type of the param
+        ArrayList<String> al = new ArrayList<>();
+        
+        
+        
         if (containsNumber) { //integer long float double
 
             if (dataType.contains(".")) { //a double or a float
@@ -382,6 +387,8 @@ public class Complexity {
                 System.out.println("String");
             }else if(dataType.equals("true") || dataType.equals("false") ){ //boolean
                 System.out.println("boolean");
+            }else{ //an object type
+                System.out.println("object type");
             }
         }
     }
