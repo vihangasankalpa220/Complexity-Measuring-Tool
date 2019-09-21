@@ -14,6 +14,7 @@ public class Constants {
     //avoid object instantiation
     private Constants(){}
     
+    //pattern to get the words
     public static final String PATTERN = "[^\\s(]+\\([^)]*\\)|\\S+";
     
     
