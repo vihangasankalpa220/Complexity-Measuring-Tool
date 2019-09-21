@@ -182,6 +182,7 @@ public class Complexity {
 
         } else {
             System.out.println("Whole code is not balanced!");
+            
             return false;
         }
     }   
