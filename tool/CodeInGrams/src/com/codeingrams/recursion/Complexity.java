@@ -319,7 +319,7 @@ public class Complexity {
                     String trimmedWord = word.replaceAll("[/*+-]", "");
 
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
-                    int cc = 0;
+                    int cc = 0, ccount = 0;
                     while (mm.find()) {
 
                         //get the parameter
@@ -329,19 +329,24 @@ public class Complexity {
                         if (param.contains(",")) { //if a method contains more than 2 params
                             String trimmed = param.replaceAll("\\s+", "");
                             String split[] = trimmed.split(",");
-
+                            int numberOfSplit = split.length;
                             for (String wor : split) {
 
                                 //check both original and recursive methods' parameters counts are equal
                                 //then we can neglect all other methods with lesser #.of paramters arguments
                                 if (split.length == parameterCount) {
                                     cc++;
+                                    ccount++;
                                     if (cc == 1) {
                                         System.out.println("- " + trimmedWord);
                                         cc = 10;
                                     }
 
-                                    checkDataType(wor, list);
+                                    if (ccount <= numberOfSplit) {
+//                                        System.out.println("CCount : " + ccount);
+                                        checkDataType(wor, list);
+                                    }
+
                                 } else {
                                     //System.out.println("no split");
                                 }
@@ -419,17 +424,26 @@ public class Complexity {
             }
         }
 
-        System.out.println("ok");
-
+        String arrayOne[] = new String[list.size()];
+        arrayOne = list.toArray(arrayOne);
+        
+        String arrayTwo[] = new String[list.size()];
+        arrayTwo = al.toArray(arrayTwo);
+        
+        if(arrayOne[0].equals(arrayTwo[0])){
+//            System.out.println("done");
+        }
+        
         //printing arg types in original method
-        for (String arg : list) {
+        list.stream().forEach((arg) -> {
             System.out.println("Arg: " + arg);
-        }
-        
-        System.out.println("---");
-        
-        for(String argg : al){
+        });
+
+        //printing args in netsetd methods which satisfies the number of args = number of args in master method
+        al.stream().forEach((argg) -> {
             System.out.println("Argg: " + argg);
-        }
+        });
+        
+        
     }
 }
