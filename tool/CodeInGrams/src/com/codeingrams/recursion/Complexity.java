@@ -359,27 +359,29 @@ public class Complexity {
 
             if (dataType.contains(".")) { //a double or a float
                 if (dataType.contains("f") || dataType.contains("F")) { //a float
-                    System.out.println("a float");
+                    System.out.println("float");
                 } else if (dataType.contains("D") || dataType.contains("d")) { //a double
-                    System.out.println("a double");
+                    System.out.println("double");
                 } else { //also a double
-                    System.out.println("a double");
+                    System.out.println("double");
                 }
             } else { //an int or a long
 
                 if ((Integer.parseInt(dataType) >= -2147483648) && (Integer.parseInt(dataType) <= 2147483647)) { //an int
-                    System.out.println("an int");
+                    System.out.println("int");
 
                 } else if ((dataType.contains("l") || dataType.contains("L")) || (Long.parseLong(dataType) >= -9223372036854775808f && (Long.parseLong(dataType) <= 9223372036854775807f))) {
-                    System.out.println("a long");
+                    System.out.println("long");
                 }
             }
 
-        } else { //can be char or String or a boolean
+        } else { //can be char or String or a boolean or an object type
             if (dataType.contains("\'")) { //char
                 System.out.println("char");
             } else if (dataType.contains("\"")) { //String
                 System.out.println("String");
+            }else if(dataType.equals("true") || dataType.equals("false") ){ //boolean
+                System.out.println("boolean");
             }
         }
     }
