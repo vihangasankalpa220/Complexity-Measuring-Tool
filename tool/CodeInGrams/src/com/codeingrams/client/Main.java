@@ -4,6 +4,7 @@
  */
 package com.codeingrams.client;
 
+import java.awt.image.VolatileImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -12,18 +13,25 @@ import com.codeingrams.analyzer.IAnalyzer;
 import com.codeingrams.conf.ConfImpl;
 import com.codeingrams.conf.CreateProperties;
 import com.codeingrams.conf.IConf;
-import com.codeingrams.conf.MongoDbHelper;
 import com.codeingrams.inheritance.Iinheritance;
 import com.codeingrams.logger.ILogger;
 import com.codeingrams.logger.LoggerImpl;
 import com.codeingrams.measurements.CiImpl;
 import com.codeingrams.measurements.CncImpl;
 import com.codeingrams.measurements.CsImpl;
-import com.codeingrams.recursion.Complexity;
+import com.codeingrams.measurements.TableViewComplexitySize;
+
+
 import com.codeingrams.size.ISize;
 
+import java.text.ParseException;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+
 class Main {
-	public static void main(String[] args) {
+	
+	public static void main(String[] args) throws ParseException {
+		javax.swing.JTable jTable1 = null;
 		//runtime counter init
 		long startTime = System.nanoTime();
 		
@@ -33,7 +41,7 @@ class Main {
 				"/  ` /  \\ |  \\ |__  | |\\ | / _` |__)  /\\   |\\/| /__` \r\n" + 
 				"\\__, \\__/ |__/ |___ | | \\| \\__> |  \\ /~~\\  |  | .__/ \r\n" + 
 				"                                                    \r\n" + 
-				"=======| STATIC CODE COMPLEXITY ANALYZER :D |======== \n \n");
+				"===============CODE COMPLEXITY in GRAMS=============== \n \n");
 		
 		//create properties file 
 		CreateProperties c = new CreateProperties();
@@ -49,56 +57,53 @@ class Main {
 		//String OUTPUTFILE = conf.loadConfig("OUTPUTFILE");
 		
 		//ANALYSER CONFIG SYSTEM loggers init
-		//ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
-		//ANALYSERLOGER.log("hello");
+		ILogger ANALYSERLOGER = new LoggerImpl("ANALYZER");
+		ANALYSERLOGER.log("hello");
 		//ILogger CONFIGLOGER = new LoggerImpl("CONFIG");
 		//ILogger SYSTEMLOGER = new LoggerImpl("SYSTEM");
 		
 		//load analyzer
 		IAnalyzer analyzer = new AnalyzerImpl();
 		try {
+                   
 			analyzer.run(INPUTFILE.toString());
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-
-		
-		System.out.println("=============================================================================");
-		System.out.println("Complexity By Size Operators Count");
-		System.out.println("=============================================================================");
-		//load analyzer
-		ISize size = new CsImpl();
-                size.count(INPUTFILE.toString());
-				
-		System.out.println("====================================================");
-		System.out.println("Complexity By Size Cs Value Counter");			
-		
-						
-		//Complexity by nesting
-		//CpImpl cp = new CpImpl();
-		//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
-
-		//Complexity by Recursion
-		Complexity complexity = new Complexity();
-		boolean value = complexity.checkRecursion(INPUTFILE);
-		System.out.println("====================================================");
-		System.out.println(value ? "Code contains recursive methods" : "Code does not contain recursive methods");	
-		
-		
-		//MongoDB connection
-		MongoDbHelper dbHelper= new MongoDbHelper();
-		dbHelper.connect();
-		
+	
 		//Complexity due to inheritance
-		Iinheritance cInheritance = new CiImpl();
-		System.out.println("========================Complexity Due To Inheritance========================");
-		try {
-			cInheritance.count(INPUTFILE.toString());
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-		System.out.println("=============================================================================");
-		
+				Iinheritance cInheritance = new CiImpl();
+				System.out.println("========================Complexity Due To Inheritance========================");
+				try {
+					cInheritance.count(INPUTFILE.toString());
+				} catch (IOException e) {
+					System.out.println(e);
+				}
+				System.out.println("=============================================================================");
+				
+				
+				System.out.println("=============================================================================");
+				System.out.println("Complexity By Size Operators Count");
+				System.out.println("=============================================================================");
+				//load analyzer
+						ISize size = new CsImpl();
+						try {
+							size.MeasureSize();
+							 VolatileImage msg = null;
+				                new TableViewComplexitySize(msg).setVisible(true);		 	
+						} catch (IOException e) {
+							System.out.println(e);
+						}
+				
+						System.out.println("====================================================");
+						System.out.println("Complexity By Size Cs Value Counter");			
+						
+						
+						//Complexity by nesting
+						//CpImpl cp = new CpImpl();
+						//System.out.println(" Complexity by Size CP : "+cp.maxDepth(INPUTFILE.toString()));
+				
+						
 		
 		//-----------------------end of the analyze----------------------------
 		long endTime   = System.nanoTime();
