@@ -182,6 +182,10 @@ public class Complexity {
                                     System.out.println("Method is: " + method);
                                     Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(method);
                                     int count = 0;
+
+                                    //Store found data types in an ArrayList
+                                    ArrayList<String> list = new ArrayList<>();
+
                                     while (m.find()) {
 //                                        System.out.println("\nDATA TYPE IS: " + m.group(1) + "\n");
 
@@ -192,7 +196,7 @@ public class Complexity {
                                         copyDataArr = new String[dataArr.length];
                                         //array to store the Data type (name)
                                         String foundDataTypes[] = new String[dataArr.length];
-                                        
+
                                         for (String keyword : dataArr) {
 
                                             for (int j = 0; j < dataTypes.length; j++) {
@@ -203,7 +207,7 @@ public class Complexity {
 
                                                 if (keyword.contains(dataTypes[j])) {
                                                     System.out.println("Found: " + dataTypeName);
-
+                                                    list.add(dataTypeName);
                                                     //store the data types
                                                     foundDataTypes[count] = dataTypeName;
                                                     count++;
@@ -211,9 +215,10 @@ public class Complexity {
                                             }
                                         }
 //                                        System.out.println("Count is: " + count);
-                                        
+
                                         //coppy array
                                         System.arraycopy(foundDataTypes, 0, copyDataArr, 0, foundDataTypes.length);
+                                        System.out.println("No of data types: " + count);
 
                                     }
 
@@ -272,7 +277,7 @@ public class Complexity {
     }
 
     private void checkMethodOverloding(String methodNameOnly, String method, String methodStructure, String foundDataTypes[], int parameterCount) throws ParseException {
-        
+
 //        System.out.println("Original: \n" + methodStructure + "\n\n");
 //        System.out.println(methodStructure.replaceAll("\\s(?=[(,])", ""));
         //get the pattern from constants
@@ -315,30 +320,44 @@ public class Complexity {
                     System.out.println("- " + trimmedWord);
 
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
+
                     while (mm.find()) {
 
                         //get the parameter
                         String param = mm.group(1);
 
-//                        System.out.println("\nDATA TYPE IS: " + param + "\n");
-
+                        //System.out.println("\nDATA TYPE IS: " + param + "\n");
                         if (param.contains(",")) { //if a method contains more than 2 params
                             String trimmed = param.replaceAll("\\s+", "");
                             String split[] = trimmed.split(",");
-                            
-                            for(String wor: split){
-                                System.out.println("------------: " + wor);
-                                checkDataType(wor);
+
+                            for (String wor : split) {
+
+                                //check both original and recursive methods' parameters counts are equal
+                                //then we can neglect all other methods with lesser #.of paramters arguments
+                                if (split.length == parameterCount) {
+                                    System.out.println("------------: " + wor);
+                                    System.out.println("yes");
+                                    checkDataType(wor);
+                                } else {
+                                    System.out.println("no split");
+                                }
+
                             }
-                            
+
                             //check what kind of parameters are within the recursive method/s
-                            
                         } else {
 //                            System.out.println("One param");      
-                            System.out.println("Simple name is: " + param.getClass().getSimpleName());
-                            
+//                            System.out.println("Simple name is: " + param.getClass().getSimpleName());
+
                             //check what kind of parameters are within the recursive method/s
-                            checkDataType(param);
+                            //and by if condition, let's check if the parameter counts are equal
+                            if (parameterCount == 1) {
+                                checkDataType(param);
+                            } else {
+                                System.out.println("no");
+                            }
+
                         }
                     }
                 }
@@ -354,12 +373,10 @@ public class Complexity {
         Pattern pattern = Pattern.compile(regex);
         String dataType = param;
         boolean containsNumber = pattern.matcher(dataType).matches();
-        
+
         //creating an ArrayList to store the data type of the param
         ArrayList<String> al = new ArrayList<>();
-        
-        
-        
+
         if (containsNumber) { //integer long float double
 
             if (dataType.contains(".")) { //a double or a float
@@ -385,9 +402,9 @@ public class Complexity {
                 System.out.println("char");
             } else if (dataType.contains("\"")) { //String
                 System.out.println("String");
-            }else if(dataType.equals("true") || dataType.equals("false") ){ //boolean
+            } else if (dataType.equals("true") || dataType.equals("false")) { //boolean
                 System.out.println("boolean");
-            }else{ //an object type
+            } else { //an object type
                 System.out.println("object type");
             }
         }
