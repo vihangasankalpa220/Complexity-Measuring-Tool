@@ -336,8 +336,7 @@ public class Complexity {
                                 //check both original and recursive methods' parameters counts are equal
                                 //then we can neglect all other methods with lesser #.of paramters arguments
                                 if (split.length == parameterCount) {
-                                    System.out.println("------------: " + wor);
-                                    System.out.println("yes");
+                                   
                                     checkDataType(wor);
                                 } else {
                                     System.out.println("no split");
@@ -382,28 +381,34 @@ public class Complexity {
             if (dataType.contains(".")) { //a double or a float
                 if (dataType.contains("f") || dataType.contains("F")) { //a float
                     System.out.println("float");
+                    al.add("float;");
                 } else if (dataType.contains("D") || dataType.contains("d")) { //a double
                     System.out.println("double");
+                    al.add("double;");
                 } else { //also a double
                     System.out.println("double");
+                    al.add("double;");
                 }
             } else { //an int or a long
 
                 if ((Integer.parseInt(dataType) >= -2147483648) && (Integer.parseInt(dataType) <= 2147483647)) { //an int
                     System.out.println("int");
-
+                    al.add("int");
                 } else if ((dataType.contains("l") || dataType.contains("L")) || (Long.parseLong(dataType) >= -9223372036854775808f && (Long.parseLong(dataType) <= 9223372036854775807f))) {
-                    System.out.println("long");
+                    al.add("long");
                 }
             }
 
         } else { //can be char or String or a boolean or an object type
             if (dataType.contains("\'")) { //char
                 System.out.println("char");
+                al.add("char");
             } else if (dataType.contains("\"")) { //String
                 System.out.println("String");
+                al.add("String");
             } else if (dataType.equals("true") || dataType.equals("false")) { //boolean
                 System.out.println("boolean");
+                al.add("boolean");
             } else { //an object type
                 System.out.println("object type");
             }
