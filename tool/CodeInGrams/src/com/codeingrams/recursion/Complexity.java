@@ -25,6 +25,7 @@ public class Complexity {
     int getCount, getCount2 = 0;
     int countOne = 0;
     int countTwo = 0;
+    boolean found = false;
 
     private static String readFile(String path) {
         StringBuilder sb = new StringBuilder();
@@ -90,7 +91,6 @@ public class Complexity {
                         || word.trim().startsWith("open")
                         || word.trim().startsWith("eof")
                         || word.trim().startsWith("outfile")
-                        || word.trim().startsWith("infile")
                         || word.trim().startsWith("toString")
                         || word.trim().contains("."))) {
 //                    System.out.println("Method is: " + word.trim());
@@ -228,37 +228,41 @@ public class Complexity {
 
                                     //get the method name
                                     String methodNameOnly = method.split("\\(")[0];
-
+//                                    System.out.println("Name: " + methodNameOnly);
                                     //END ============
                                     //method structure
                                     String methodStructure = textFile.substring(startIndex, endIndex);
 
+                                    /*String findStr = methodNameOnly;
+                                     int lastIndex = 0;
+                                     int count2 = 0;
+                                     while (lastIndex != -1) {
+
+                                     lastIndex = methodStructure.indexOf(findStr, lastIndex);
+
+                                     if (lastIndex != -1) {
+                                     count2++;
+                                     lastIndex += findStr.length();
+                                     }
+                                     }
+                                     */
+                                    //occurence of the recursive method within the code block
+//                                    System.out.println(count2-1);
                                     //get all the methods with the same method name to check if they satisfy the
                                     //same name different parameter lists concept (method overloading)
                                     //so we can check is it the same method's been recursing within.
                                     boolean ok = checkMethodOverloding(methodNameOnly, method, methodStructure, copyDataArr, count, list);
 
-                                    String findStr = methodNameOnly;
-                                    int lastIndex = 0;
-                                    int count2 = 0;
-                                    while (lastIndex != -1) {
-
-                                        lastIndex = methodStructure.indexOf(findStr, lastIndex);
-
-                                        if (lastIndex != -1) {
-                                            count2++;
-                                            lastIndex += findStr.length();
-                                        }
-                                    }
-                                    //occurence of the recursive method within the code block
-//                                    System.out.println(count2-1);
-
                                     if (ok) {
-                                        System.out.println("***|Visual Structure of the recursive method snippet is: \n" + methodStructure);
+                                        System.out.println("\n***|Visual Structure of the recursive method snippet is: \n" + methodStructure);
                                         System.out.println();
                                         System.out.println();
                                         flag = true;
-                                    } 
+                                    }
+//                                    System.out.println("***|Visual Structure of the recursive method snippet is: \n" + methodStructure);
+//                                    System.out.println();
+//                                    System.out.println();
+//                                    flag = true;
 
                                 } else {
 //                                    System.out.println("666");
@@ -288,8 +292,9 @@ public class Complexity {
 
         boolean flag = false;
         boolean flag2 = false;
-//        System.out.println("Original: \n" + methodStructure + "\n\n");
-//        System.out.println(methodStructure.replaceAll("\\s(?=[(,])", ""));
+
+        System.out.println("Found methods: " + methodNameOnly);
+
         //get the pattern from constants
         Pattern p = Pattern.compile(Constants.PATTERN);
 
@@ -304,6 +309,7 @@ public class Complexity {
 
         // if an occurrence if a pattern was found in a given string...
         while (m.find()) {
+
             getCount = 0;
             getCount2 = 0;
             countOne = 0;
@@ -311,11 +317,14 @@ public class Complexity {
 
             //rename m.group(0) for easy use to word
             String word = m.group(0).trim();
+//            System.out.println("Word is: " + word);
+//            System.out.println("method name only is: " + method);
 
             //this && !(word.equals(method)) will ignore the method name being printed/getting since we dont need its
             //parenthesis to check overloading, so only recursive methods are printed
-            if (word.contains("(") && !(word.equals(method))) {
-
+            if (word.contains("(") && (word.contains(methodNameOnly)) && !word.equals(method)) {
+//                System.out.println(word.replaceAll("[^\\w\\s]",""));
+                
                 if (!(word.trim().startsWith("for")
                         || word.trim().startsWith("while")
                         || word.trim().startsWith("if")
@@ -326,17 +335,19 @@ public class Complexity {
                         || word.trim().startsWith("open")
                         || word.trim().startsWith("eof")
                         || word.trim().startsWith("outfile")
-                        || word.trim().startsWith("infile")
-                        || word.trim().startsWith("toString"))) {
+                        || word.trim().startsWith("toString")
+                        || word.trim().startsWith("."))) {
 
                     //additional chracters will be removed before the function name like -> return powerOf10 n-1)*+-/powerOf10("hey");
                     String trimmedWord = word.replaceAll("[/*+-]", "");
-
+                    
+//                    System.out.println("Trimmed words " + trimmedWord);
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
                     int cc = 0, ccount = 0, count2 = 0;
 
                     while (mm.find()) {
-
+                        
+                        
                         //get the parameter
                         String param = mm.group(1);
 
@@ -368,7 +379,7 @@ public class Complexity {
                                     if (ccount <= numberOfSplit) {
 //                                        System.out.println("CCount : " + ccount);
 
-                                        flag = isRecursive(wor, list);
+                                        flag = isRecursive(wor, list, method, trimmedWord);
 
                                     }
 
@@ -385,7 +396,7 @@ public class Complexity {
                             //and by if condition, let's check if the parameter counts are equal
                             if (parameterCount == 1) {
 //                                System.out.println("- " + trimmedWord);
-                                flag2 = isRecursive(param, list);
+                                flag2 = isRecursive(param, list, method, trimmedWord);
 
                             }
 
@@ -403,15 +414,18 @@ public class Complexity {
     }
 
     //this will check what kind of parameters are within the recursive method/s
-    private boolean isRecursive(String param, ArrayList<String> list) {
+    private boolean isRecursive(String param, ArrayList<String> list, String method, String trimmedWord) {
 
         boolean flag = false;
+        
+        
 
         //regex to check if the param is a number o(of any kind) or a character-type data type
         String regex = "(.)*(\\d)(.)*";
 
         Pattern pattern = Pattern.compile(regex);
         String dataType = param;
+
         boolean containsNumber = pattern.matcher(dataType).matches();
 
         //creating an ArrayList to store the data type of the param
@@ -420,6 +434,7 @@ public class Complexity {
         if (containsNumber) { //integer long float double
 
             if (dataType.contains(".") || dataType.contains("f") || dataType.contains("F") || dataType.contains("d") || dataType.contains("D")) { //a double or a float
+
                 if (dataType.contains("f") || dataType.contains("F")) { //a float
 //                    System.out.println("float");
                     al.add("float");
@@ -431,15 +446,22 @@ public class Complexity {
                     al.add("double");
                 }
             } else { //an int or a long
+//                System.out.println("TYPE: " + dataType);
+                try {
+                    if ((Integer.parseInt(dataType) >= -2147483648) && (Integer.parseInt(dataType) <= 2147483647)) {
+//                        System.out.println("int");
+                        al.add("int");
+                    } else if ((dataType.contains("l") || dataType.contains("L")) || (Long.parseLong(dataType) >= -9223372036854775808f && (Long.parseLong(dataType) <= 9223372036854775807f))) {
+                        al.add("long");
+                    } else {
+                        System.out.println("error");
+                    }
 
-                if ((Integer.parseInt(dataType) >= -2147483648) && (Integer.parseInt(dataType) <= 2147483647)) { //an int
-//                    System.out.println("int");
-                    al.add("int");
-                } else if ((dataType.contains("l") || dataType.contains("L")) || (Long.parseLong(dataType) >= -9223372036854775808f && (Long.parseLong(dataType) <= 9223372036854775807f))) {
-                    al.add("long");
-                } else {
-                    System.out.println("error");
+                } catch (Exception e) {
+//                    System.out.println("unknown error at: " + 445);
+                    e.printStackTrace();
                 }
+
             }
 
         } else { //can be char or String or a boolean or an object type
@@ -453,18 +475,16 @@ public class Complexity {
 //                System.out.println("boolean");
                 al.add("boolean");
             } else { //an object type
-                System.out.println("object type");
+//                System.out.println("object type");
                 al.add("Object");
             }
         }
 
-        String arrayTwo[] = arrayTwo = new String[al.size()];
-        arrayTwo = al.toArray(arrayTwo);
-
         String arrayOne[] = new String[list.size()];
-
-//        if (getCount <= 0) {
         arrayOne = list.toArray(arrayOne);
+
+        String arrayTwo[] = new String[al.size()];
+        arrayTwo = al.toArray(arrayTwo);
 
         //printing arg types in original method
         list.stream().forEach((arg) -> {
@@ -473,7 +493,7 @@ public class Complexity {
         getCount++;
 
         for (String one : arrayOne) {
-//                System.out.println("ORIGINAL: " + one);
+//            System.out.println("ORIGINAL: " + one);
         }
 //        }
 
@@ -483,26 +503,33 @@ public class Complexity {
 
         int c = getCount2;
 
-//        System.out.println(arrayTwo[0]);
-        if (arrayOne[c].equals(arrayTwo[0])) {
-            countOne++;
+        try {
+            if (arrayOne[c].equals(arrayTwo[0])) {
+                countOne++;
 //            System.out.println("Found");
-        } else {
-            countTwo++;
+            } else {
+                countTwo++;
 //            System.out.println("Not found!");
-        }
-        getCount2++;
+            }
 
+        } catch (Exception e) {
+//            System.out.println("Error at line: " + 502);
+            e.printStackTrace();
+        }
+
+        getCount2++;
         if (countOne == list.size()) {
-            System.out.println("*********************************************************************");
+//            System.out.println("*********************************************************************");
+            System.out.println(trimmedWord + " - satisfies the criteria");
             flag = true;
+            found = flag;
         } else {
 
 //            System.out.println("aiyooo..........................");
 //            return false;
         }
 
-        if (flag) {
+        if (found) {
             return true;
         } else {
             return false;
