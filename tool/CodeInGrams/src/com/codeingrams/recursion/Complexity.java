@@ -29,6 +29,7 @@ public class Complexity {
 
     private static String readFile(String path) {
         StringBuilder sb = new StringBuilder();
+        int lineNumber = 0;
 
         try (BufferedReader br = Files.newBufferedReader(Paths.get(path))) {
 
@@ -36,7 +37,7 @@ public class Complexity {
             // read line by line
             while ((line = br.readLine()) != null) {
                 sb.append(line).append("\n");
-
+                lineNumber++;
             }
 
         } catch (IOException e) {
@@ -46,6 +47,7 @@ public class Complexity {
         //trimming all additional wite spaces. White spaces greater than 2
         String trimmedAdditionalWhiteSpaces = sb.toString().replaceAll("\\s+", " ");
 //        System.out.println("Trimmed: " + trimmedAdditionalWhiteSpaces);
+
         return trimmedAdditionalWhiteSpaces;
 
     }
@@ -251,9 +253,10 @@ public class Complexity {
                                     //get all the methods with the same method name to check if they satisfy the
                                     //same name different parameter lists concept (method overloading)
                                     //so we can check is it the same method's been recursing within.
-                                    boolean ok = checkMethodOverloding(methodNameOnly, method, methodStructure, copyDataArr, count, list);
+                                    boolean ok = checkMethodOverloding(path, methodNameOnly, method, methodStructure, copyDataArr, count, list);
 
                                     if (ok) {
+
                                         System.out.println("\n***|Visual Structure of the recursive method snippet is: \n" + methodStructure);
                                         System.out.println();
                                         System.out.println();
@@ -288,12 +291,10 @@ public class Complexity {
         }
     }
 
-    private boolean checkMethodOverloding(String methodNameOnly, String method, String methodStructure, String foundDataTypes[], int parameterCount, ArrayList<String> list) throws ParseException {
+    private boolean checkMethodOverloding(String path, String methodNameOnly, String method, String methodStructure, String foundDataTypes[], int parameterCount, ArrayList<String> list) throws ParseException {
 
         boolean flag = false;
         boolean flag2 = false;
-
-        System.out.println("Found methods: " + methodNameOnly);
 
         //get the pattern from constants
         Pattern p = Pattern.compile(Constants.PATTERN);
@@ -317,14 +318,14 @@ public class Complexity {
 
             //rename m.group(0) for easy use to word
             String word = m.group(0).trim();
+
 //            System.out.println("Word is: " + word);
 //            System.out.println("method name only is: " + method);
-
             //this && !(word.equals(method)) will ignore the method name being printed/getting since we dont need its
             //parenthesis to check overloading, so only recursive methods are printed
-            if (word.contains("(") && (word.contains(methodNameOnly)) && !word.equals(method)) {
+            if (word.contains("(") && (word.contains(methodNameOnly))) { //&& !word.equals(method)
 //                System.out.println(word.replaceAll("[^\\w\\s]",""));
-                
+
                 if (!(word.trim().startsWith("for")
                         || word.trim().startsWith("while")
                         || word.trim().startsWith("if")
@@ -340,26 +341,24 @@ public class Complexity {
 
                     //additional chracters will be removed before the function name like -> return powerOf10 n-1)*+-/powerOf10("hey");
                     String trimmedWord = word.replaceAll("[/*+-]", "");
-                    
-//                    System.out.println("Trimmed words " + trimmedWord);
+
                     Matcher mm = Pattern.compile("\\(([^)]+)\\)").matcher(trimmedWord);
                     int cc = 0, ccount = 0, count2 = 0;
 
                     while (mm.find()) {
-                        
-                        
+
                         //get the parameter
                         String param = mm.group(1);
 
                         //System.out.println("\nDATA TYPE IS: " + param + "\n");
                         if (param.contains(",")) { //if a method contains more than 2 params
-
+                            System.out.println("1");
                             String trimmed = param.replaceAll("\\s+", "");
                             String split[] = trimmed.split(",");
                             int numberOfSplit = split.length;
 
                             if (parameterCount == numberOfSplit) {
-                                System.out.println("found");
+//                                System.out.println("found");
                             } else {
 
                             }
@@ -379,7 +378,7 @@ public class Complexity {
                                     if (ccount <= numberOfSplit) {
 //                                        System.out.println("CCount : " + ccount);
 
-                                        flag = isRecursive(wor, list, method, trimmedWord);
+                                        flag = isRecursive(path, wor, list, method, trimmedWord);
 
                                     }
 
@@ -389,14 +388,12 @@ public class Complexity {
 
                             //check what kind of parameters are within the recursive method/s
                         } else {
-//                            System.out.println("One param");      
-//                            System.out.println("Simple name is: " + param.getClass().getSimpleName());
 
                             //check what kind of parameters are within the recursive method/s
                             //and by if condition, let's check if the parameter counts are equal
                             if (parameterCount == 1) {
 //                                System.out.println("- " + trimmedWord);
-                                flag2 = isRecursive(param, list, method, trimmedWord);
+                                flag2 = isRecursive(path, param, list, method, trimmedWord);
 
                             }
 
@@ -414,11 +411,9 @@ public class Complexity {
     }
 
     //this will check what kind of parameters are within the recursive method/s
-    private boolean isRecursive(String param, ArrayList<String> list, String method, String trimmedWord) {
+    private boolean isRecursive(String path, String param, ArrayList<String> list, String method, String trimmedWord) {
 
         boolean flag = false;
-        
-        
 
         //regex to check if the param is a number o(of any kind) or a character-type data type
         String regex = "(.)*(\\d)(.)*";
@@ -506,6 +501,7 @@ public class Complexity {
         try {
             if (arrayOne[c].equals(arrayTwo[0])) {
                 countOne++;
+                getLineNumbers(path, method);
 //            System.out.println("Found");
             } else {
                 countTwo++;
@@ -535,4 +531,38 @@ public class Complexity {
             return false;
         }
     }
+
+    private void getLineNumbers(String path, String method) {
+//        System.out.println(methodStrcuture);
+        StringBuilder sb = new StringBuilder();
+        int lineNumber = 0;
+        System.out.println("meeeee: " + method) ;
+        
+        int start = 0;
+        int end = 0;
+
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(path))) {
+
+            String line;
+            // read line by line
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+                lineNumber++;
+                String l = line.replaceAll("\\s+", " ");
+                
+                if(l.contains(method)){
+                    start = lineNumber;
+                }else{
+                    
+                    System.out.println(lineNumber + " no found");
+                }
+
+            }
+
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+
+    }
+
 }
