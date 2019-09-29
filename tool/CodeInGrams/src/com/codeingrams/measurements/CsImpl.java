@@ -5,6 +5,10 @@
  */
 package com.codeingrams.measurements;
 
+import com.codeingrams.conf.ConfImpl;
+import com.codeingrams.conf.CreateProperties;
+import com.codeingrams.conf.IConf;
+import com.codeingrams.inheritance.Iinheritance;
 import java.awt.image.VolatileImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -60,8 +64,18 @@ public class CsImpl implements ISize  {
     String doubleqoute="\"([^\"]*)\"";
    String white= "\\p{Space}";
    int varibles=0;
-    public void MeasureSize() {
-
+   //create properties file 
+		CreateProperties c = new CreateProperties();
+		//c.setProperties();
+		
+		//Load configurations
+		IConf conf = new ConfImpl("./config.properties");
+   //load input file
+		String INPUTFILE = conf.loadConfig("INPUTFILE");
+   
+    public void MeasureSize() throws IOException {
+Iinheritance cInheritance = new CiImpl();
+int CCi=cInheritance.count(INPUTFILE.toString());
         try {
 
           //  Pattern pattern = Pattern.compile("\"([^\"]*)\"");
@@ -351,7 +365,7 @@ public class CsImpl implements ISize  {
                 System.out.println(""); 
                System.out.println("===================================================================================================================================================================");
             try {
-              Database.setData("insert into codesize(lineNo,Line,Complexity) values('" + line_count + "','" + line + "','" + complexity +  "') ");
+              Database.setData("insert into codesize(lineNo,Line,Complexity,InheritanceComplexity) values('" + line_count + "','" + line + "','" + complexity +  "','"+CCi+"') ");
               
                //}
             }catch(Exception e) {
@@ -371,7 +385,11 @@ public class CsImpl implements ISize  {
         }
 
         System.out.println("Total Size Complexity is: " + totalcomplexity);
-     
+        try{
+     Database.setData("insert into codecom(total) values('"+totalcomplexity+"') ");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         JOptionPane.showMessageDialog(null, "Successfully Added CodeInGrams Code For the Database");
     }
 
